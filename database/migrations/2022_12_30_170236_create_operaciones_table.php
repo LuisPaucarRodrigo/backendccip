@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('operaciones', function (Blueprint $table) {
             $table->id();
             $table->foreignId('usuario_id')->references('id')->on('usuario_c_c_i_p_s');
+            $table->string('control_gastos');
             $table->string("cuadrilla");
             $table->dateTime('fecha_insercion');
             $table->string("ruc"); 

@@ -21,10 +21,16 @@ class LoginController extends Controller
         }
         $user = Auth::getProvider()->retrieveByCredentials($credentials);
         Auth::login($user);
+        //dd($user);
         return $this->authenticated($request, $user);
     }
     public function authenticated(Request $request, $user){
-        return redirect('/home/general');
+        if ($user->rol == 'Asistente') {
+            return redirect('/home/reportes');
+        } else {
+            return redirect('/home/general');
+        }
+        //return redirect('/home/general');
     }
     public function logout(){
         Auth::logout();

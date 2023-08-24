@@ -16,14 +16,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {return redirect('/home');});
 Route::get('/php', function () {return view('welcome');});
-Route::get('/register', function () {return view('auth.register');});
-Route::post('/register', [\App\Http\Controllers\RegisterController::class,'register']);
+
 
 Route::get('/login', [\App\Http\Controllers\LoginController::class,'show']);
 Route::post('/login', [\App\Http\Controllers\LoginController::class,'login']);
+Route::post('/logout', [\App\Http\Controllers\LoginController::class,'logout']);
 
-
-Route::group(['middleware' => 'admin'], function () {
+Route::middleware(['admin', 'can:admin.general'])->group(function () {
     //Gneral
     Route::get('/home/general',[\App\Http\Controllers\HomeController::class,'general']);
     Route::post('/home/general/config',[\App\Http\Controllers\HomeController::class,'general']);
@@ -33,9 +32,12 @@ Route::group(['middleware' => 'admin'], function () {
 
     //Home
     Route::get('/home', [\App\Http\Controllers\UsuariosCCIPController::class,'index']);
+    Route::get('/administradores', [\App\Http\Controllers\UsuariosCCIPController::class,'useradministradores']);
 
+    Route::get('/register', function () {return view('auth.register');});
+    Route::post('/register', [\App\Http\Controllers\RegisterController::class,'register']); 
     //LoginController
-    Route::post('/logout', [\App\Http\Controllers\LoginController::class,'logout']);
+    
 
     //UsuariosCCIPController
     Route::get('/home/nuevoUsuario', function (){return view('CCIP.newUser');});
@@ -64,4 +66,14 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::get('/home/tareas',[\App\Http\Controllers\HomeController::class,'listtareas']);
     Route::post('/home/tareas/user',[\App\Http\Controllers\HomeController::class,'listtareas']);
+});
+
+Route::middleware(['can:admin.administracion.reportes'])->group(function () {
+
+    //Reportes
+    Route::post('home/generate',[\App\Http\Controllers\HomeController::class,'generate']);
+    Route::get('/home/reportes',[\App\Http\Controllers\HomeController::class,'generar']);
+    Route::get('/home/export/general', [\App\Http\Controllers\HomeController::class, 'general']);
+    Route::get('/home/export/combustibles', [\App\Http\Controllers\HomeController::class, 'combustible']);
+
 });

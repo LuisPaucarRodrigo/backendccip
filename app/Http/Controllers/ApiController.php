@@ -34,11 +34,12 @@ class ApiController extends Controller
         $usuario->saldo = $usuario->saldo - $monto_total;
         $usuario->save();
     }
-    public function operacion($usuario_id,$ruc,$tipo_doc,$cuadrilla,$nro_doc,$fecha_documento,$tipo,$monto,$fecha){
+    public function operacion($usuario_id,$ruc,$tipo_doc,$control_gastos,$cuadrilla,$nro_doc,$fecha_documento,$tipo,$monto,$fecha){
         $operacion = new Operaciones();
         $operacion->usuario_id = $usuario_id;
         $operacion->ruc = $ruc;
         $operacion->tipo_documento = $tipo_doc;
+        $operacion->control_gastos = $control_gastos;
         $operacion->cuadrilla = $cuadrilla;
         $operacion->nro_documento = $nro_doc;
         $operacion->fecha_documento = $fecha_documento;
@@ -85,6 +86,7 @@ class ApiController extends Controller
                 $traslado->Oper_Inc_Crq = $request->Oper_Inc_Crq;
                 $traslado->Nro_Oper = $request->Nro_Oper;
                 $traslado->fecha_insercion = $request->fecha_insercion;
+                $traslado->control_gastos = $request->control_gastos;
                 $traslado->cuadrilla = $request->cuadrilla;
                 $traslado->usuario_id = $request->usuario_id;
                 $traslado->save();
@@ -136,12 +138,12 @@ class ApiController extends Controller
                 $ruta2 = "192.168.1.80:8000/imagenes/".$path;
                 File::put(public_path('imagenes/').$path,$imageContnt2);
                 $combustible->foto_factura = $ruta2;
-    
+                $combustible->control_gastos = $request->control_gastos;
                 $combustible->cuadrilla = $request->cuadrilla;
                 $combustible->fecha_insercion = $request->fecha_insercion;
                 $combustible->usuario_id = $request->usuario_id;
                 $combustible->save();
-                $this->operacion($request->usuario_id,$request->ruc,"Factura",$request->cuadrilla,$request->nro_factura,
+                $this->operacion($request->usuario_id,$request->ruc,"Factura",$request->control_gastos,$request->cuadrilla,$request->nro_factura,
                 $request->fecha_factura,"Combustible",$request->monto_total,$request->fecha_insercion);
                 $this->gasto($request->usuario_id,$request->monto_total);
                 return response()->json([
@@ -185,9 +187,10 @@ class ApiController extends Controller
                 $peaje->fecha_insercion = $request->fecha_insercion;
                 $peaje->monto_total = $request->monto_total;
                 $peaje->usuario_id = $request->usuario_id;
+                $peaje->control_gastos = $request->control_gastos;
                 $peaje->cuadrilla = $request->cuadrilla;
                 $peaje->save();
-                $this->operacion($request->usuario_id,$request->ruc, "Factura", $request->cuadrilla, $request->nro_factura,
+                $this->operacion($request->usuario_id,$request->ruc, "Factura",$request->control_gastos, $request->cuadrilla, $request->nro_factura,
                 $request->fecha_factura,"Peaje", $request->monto_total, $request->fecha_insercion);
                 $this->gasto($request->usuario_id, $request->monto_total);
                 return response()->json([
@@ -231,9 +234,10 @@ class ApiController extends Controller
                 $otros->fecha_insercion = $request->fecha_insercion;
                 $otros->monto_total = $request->monto_total;
                 $otros->usuario_id = $request->usuario_id;
+                $otros->control_gastos = $request->control_gastos;
                 $otros->cuadrilla = $request->cuadrilla;
                 $otros->save();
-                $this->operacion($request->usuario_id,$request->ruc,$request->tipo_documento, $request->cuadrilla, $request->numero_documento,
+                $this->operacion($request->usuario_id,$request->ruc,$request->tipo_documento,$request->control_gastos, $request->cuadrilla, $request->numero_documento,
                 $request->fecha_documento,"Otros", $request->monto_total, $request->fecha_insercion);
                 $this->gasto($request->usuario_id, $request->monto_total);
                 return response()->json([
@@ -285,10 +289,11 @@ class ApiController extends Controller
                 $cgep->foto_galonera = $ruta2;
     
                 $cgep->cuadrilla = $request->cuadrilla;
+                $cgep->control_gastos = $request->control_gastos;
                 $cgep->fecha_insercion = $request->fecha_insercion;
                 $cgep->usuario_id = $request->usuario_id;
                 $cgep->save();
-                $this->operacion($request->usuario_id,$request->ruc,"Factura",$request->cuadrilla,$request->nro_factura,
+                $this->operacion($request->usuario_id,$request->ruc,"Factura",$request->control_gastos,$request->cuadrilla,$request->nro_factura,
                 $request->fecha_factura,"CombustibleGep",$request->monto_total,$request->fecha_insercion);
                 $this->gasto($request->usuario_id,$request->monto_total);
                 return response()->json([

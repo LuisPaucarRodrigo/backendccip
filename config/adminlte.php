@@ -304,39 +304,54 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
-        [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
-        ['header' => 'Dashboard'],
+        // [
+        //     'text' => 'blog',
+        //     'url'  => 'admin/blog',
+        //     'can'  => 'manage-blog',
+        // ],
+        ['header' => 'Gerente',
+        'can' => 'admin.general'],
         [
             'text'        => 'General',
             'url'         => '/home/general',
             'icon' =>'fas fa-fw fa-chart-bar',
             'label_color' => 'success',
+            'can' => 'admin.general'
         ],
-        ['header' => 'Usuarios'],
         [
             'text'        => 'Usuarios',
-            'url'         => 'home',
-            'icon' =>'fas fa-fw fa-user',
-            'label_color' => 'success',
+            'can' => 'admin.general',
+            'submenu' => [
+                [
+                    'text'        => 'Usuarios Administradores',
+                    'url'         => 'administradores',
+                    'icon' =>'fas fa-fw fa-user',
+                    'label_color' => 'success',
+                ],[
+                    'text'        => 'Usuarios App',
+                    'url'         => 'home',
+                    'icon' =>'fas fa-fw fa-user',
+                    'label_color' => 'success',
+                ]
+            ]
+
         ],
-        ['header' => 'Reportes'],
-        [
-            'text'        => 'Reportes',
-            'url'         => '/home/reportes',
-            'icon' => 'fas fa-fw fa-file',
-            'label_color' => 'success',
-        ],
-        ['header' => 'Tareas'],
         [
             'text'        => 'Tareas',
             'url'         => '/home/tareas',
             'icon' => 'fas fa-fw fa-file',
             'label_color' => 'success',
+            'can' => 'admin.general',
         ],
+        ['header' => 'Administracion'],
+        [
+            'text'        => 'Reportes',
+            'url'         => '/home/reportes',
+            'icon' => 'fas fa-fw fa-file',
+            'label_color' => 'success',
+            'can' => 'admin.administracion.reportes'
+        ],
+       
         // [
         //     'text'        => 'Informes',
         //     'url'         => '/home/informes',

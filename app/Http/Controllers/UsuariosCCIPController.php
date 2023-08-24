@@ -6,6 +6,7 @@ use App\Http\Requests\CCIPRequest;
 use App\Http\Requests\forgotRequest;
 use App\Models\Operaciones;
 use App\Models\Recarga;
+use App\Models\User;
 use App\Models\UsuarioCCIP;
 use App\Models\UsuarioCCIP as usuarios;
 use Brick\Math\Exception\NegativeNumberException;
@@ -15,7 +16,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class UsuariosCCIPController extends Controller
-{
+{   
+    public function useradministradores(){
+        $users = user::all();
+        return view('CCIP.useradministradores',compact('users'));
+    }
 
     public function index(){
         $usuarios = usuarios::all();

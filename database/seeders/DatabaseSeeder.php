@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        UsuarioCCIP::factory(15)->create();
+        $this->call(RoleSeeder::class);
+        //UsuarioCCIP::factory(15)->create();
     }
 }

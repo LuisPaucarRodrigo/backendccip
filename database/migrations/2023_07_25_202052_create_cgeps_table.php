@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('cgeps', function (Blueprint $table) {
             $table->id();
+            $table->string('control_gastos');
             $table->string('cuadrilla');
             $table->dateTime('fecha_insercion');
             $table->string("ruc"); 
