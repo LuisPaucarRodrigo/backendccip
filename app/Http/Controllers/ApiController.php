@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cardoc;
 use App\Models\Cgep;
 use App\Models\Combustible;
+use App\Models\Controltool;
+use App\Models\Equipmentcar;
+use App\Models\Equipmenttoll;
+use App\Models\Kittoll;
 use App\Models\Operaciones;
 use App\Models\Otros;
 use App\Models\Peaje;
@@ -12,6 +17,7 @@ use App\Models\UsuarioCCIP;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Notification;
+use App\Models\Statecar;
 use App\Models\Tarea;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -358,6 +364,203 @@ class ApiController extends Controller
             $task = Tarea::find($request->id);
             $task -> state = $request->stateTask;
             $task -> save();
+            return response()->json([
+                'response'=>1
+                ]
+            );
+        }
+        return response()->json([
+            'response'=>0
+        ]);
+    }
+
+    public function checkStateCarEquipment(Request $request){
+        $v = $this->validar($request->usuario_id,$request->token);
+        if ($v){
+            $equipmentcar = new Equipmentcar();
+            $equipmentcar->control_gastos = $request->control_gastos;
+            $equipmentcar->cuadrilla = $request->cuadrilla;
+            $equipmentcar->fecha_insercion = $request->fecha_insercion;
+            $equipmentcar->usuario_id = $request->usuario_id;
+            $equipmentcar->extintor = $request->checkExtintor;
+            $equipmentcar->botiquin = $request->checkBotiquin;
+            $equipmentcar->conos = $request->checkConos;
+            $equipmentcar->gata = $request->checkGata;
+            $equipmentcar->neumatico = $request->checkNeumatico;
+            $equipmentcar->ca_remolque = $request->checkCableRemolque;
+            $equipmentcar->ca_bateria = $request->checkCableBateria;
+            $equipmentcar->reflejante = $request->checkReflejante;
+            $equipmentcar->kit = $request->checkKit;
+            $equipmentcar->alarma = $request->checkAlarma;
+            $equipmentcar->gps = $request->checkGps;
+            $equipmentcar->tacos = $request->checkTacos;
+            $equipmentcar->interna = $request->checkinterna;
+            $equipmentcar->antivuelco = $request->checkAntivuelco;
+            $equipmentcar->portaescalera = $request->checkPortaEscalera;
+            $equipmentcar->placalateral = $request->checkPlacaLateral;
+            $equipmentcar->save();
+            return response()->json([
+                'response'=>1
+                ]
+            );
+        }
+        return response()->json([
+            'response'=>0
+        ]);
+    }
+
+    public function checkStateCar(Request $request){
+        $v = $this->validar($request->usuario_id,$request->token);
+        if ($v){
+            $statecar = new Statecar();
+            $statecar->control_gastos = $request->control_gastos;
+            $statecar->cuadrilla = $request->cuadrilla;
+            $statecar->fecha_insercion = $request->fecha_insercion;
+            $statecar->usuario_id = $request->usuario_id;
+            $statecar->bocina = $request->bocina;
+            $statecar->frenos = $request->frenos;
+            $statecar->lucesaltasbajas = $request->lucesaltasbajas;
+            $statecar->intermitentes = $request->intermitentes;
+            $statecar->direccionales = $request->direccionales;
+            $statecar->retrovisores = $request->retrovisores;
+            $statecar->neumaticos = $request->neumatico;
+            $statecar->parachoques = $request->parachoques;
+            $statecar->temperatura = $request->temperatura;
+            $statecar->aceite = $request->aceite;
+            $statecar->combustible = $request->combustible;
+            $statecar->aseovehiculo = $request->aseovehiculo;
+            $statecar->puertas = $request->puertas;
+            $statecar->parabrisas = $request->parabrisas;
+            $statecar->motor = $request->motor;
+            $statecar->bateria = $request->bateria;
+            $statecar->save();
+            return response()->json([
+                'response'=>1
+                ]
+            );
+        }
+        return response()->json([
+            'response'=>0
+        ]);
+    }
+
+    public function checkCarDoc(Request $request){
+        $v = $this->validar($request->usuario_id,$request->token);
+        if ($v){
+            $cardoc = new Cardoc();
+            $cardoc->control_gastos = $request->control_gastos;
+            $cardoc->cuadrilla = $request->cuadrilla;
+            $cardoc->fecha_insercion = $request->fecha_insercion;
+            $cardoc->usuario_id = $request->usuario_id;
+            $cardoc->circulacion = $request->checkCirculacion;
+            $cardoc->tecnica = $request->checkTecnica;
+            $cardoc->soat = $request->checkSoat;
+            $cardoc->save();
+            return response()->json([
+                'response'=>1
+                ]
+            );
+        }
+        return response()->json([
+            'response'=>0
+        ]);
+    }
+
+    public function checkControlEquipmentTools(Request $request){
+        $v = $this->validar($request->usuario_id,$request->token);
+        if ($v){
+            $tollEquipment = new Equipmenttoll();
+            // Asignar los valores recibidos por request a los campos del modelo
+            $tollEquipment->control_gastos = $request->control_gastos;
+            $tollEquipment->cuadrilla = $request->cuadrilla;
+            $tollEquipment->fecha_insercion = $request->fecha_insercion;
+            $tollEquipment->usuario_id = $request->usuario_id;
+            $tollEquipment->hidrolavadora = $request->hidrolavadora;
+            $tollEquipment->sopladora = $request->sopladora;
+            $tollEquipment->megometro = $request->megometro;
+            $tollEquipment->telurometro = $request->telurometro;
+            $tollEquipment->aperimetrica = $request->aperimetrica;
+            $tollEquipment->manometro = $request->manometro;
+            $tollEquipment->pirometro = $request->pirometro;
+            $tollEquipment->laptop = $request->laptop;
+            $tollEquipment->taladro = $request->taladro;
+            $tollEquipment->brujula = $request->brujula;
+            $tollEquipment->inclinometro = $request->inclinometro;
+            $tollEquipment->linterna = $request->linterna;
+            $tollEquipment->powermeter = $request->powermeter;
+            $tollEquipment->pistola = $request->pistola;
+            $tollEquipment->pertiga = $request->pertiga;
+            $tollEquipment->cuter = $request->cuter;
+            $tollEquipment->escalera = $request->escalera;
+            $tollEquipment->extension = $request->extension;
+            $tollEquipment->pistolaestano = $request->pistolaestano;
+            $tollEquipment->escaleratijera = $request->escaleratijera;
+            $tollEquipment->carrito = $request->carrito;
+            $tollEquipment->save();
+            return response()->json([
+                'response'=>1
+                ]
+            );
+        }
+        return response()->json([
+            'response'=>0
+        ]);
+    }
+
+    public function checkControlKitTools(Request $request){
+        $v = $this->validar($request->usuario_id,$request->token);
+        if ($v){
+            $kittoll = new Kittoll();
+            $kittoll->control_gastos = $request->control_gastos;
+            $kittoll->cuadrilla = $request->cuadrilla;
+            $kittoll->fecha_insercion = $request->fecha_insercion;
+            $kittoll->usuario_id = $request->usuario_id;
+            $kittoll->mosqueton = $request->checkMosqueton;
+            $kittoll->pelacable = $request->checkPelacable;
+            $kittoll->crimpeadora = $request->checkCrimpeadora;
+            $kittoll->limas = $request->checkLimas;
+            $kittoll->allen = $request->checkAllen;
+            $kittoll->readline = $request->checkKitReadline;
+            $kittoll->impacto = $request->checkImpacto;
+            $kittoll->dielectricos = $request->checkDielectricos;
+            $kittoll->corte = $request->checkCorte;
+            $kittoll->fuerza = $request->checkFuerza;
+            $kittoll->recto = $request->checkRecto;
+            $kittoll->francesas = $request->checkFrancesas;
+            $kittoll->sierra = $request->checkSierra;
+            $kittoll->silicona = $request->checkSilicona;
+            $kittoll->polea = $request->checkPolea;
+            $kittoll->wincha = $request->checkWincha;
+            $kittoll->eslinga = $request->checkEslinga;
+            $kittoll->brocas = $request->checkBrocas;
+            $kittoll->sacabocado = $request->checkSacabocado;
+            $kittoll->extractor = $request->checkExtractor;
+            $kittoll->maletagrande = $request->checkMaletaGrande;
+            $kittoll->maletamediana = $request->checkMaletaMediana;
+            $kittoll->save();
+            return response()->json([
+                'response'=>1
+                ]
+            );
+        }
+        return response()->json([
+            'response'=>0
+        ]);
+    }
+
+    public function checkControlTools(Request $request){
+        $v = $this->validar($request->usuario_id,$request->token);
+        if ($v){
+            $controltoll = new Controltool();
+            $controltoll->control_gastos = $request->control_gastos;
+            $controltoll->cuadrilla = $request->cuadrilla;
+            $controltoll->fecha_insercion = $request->fecha_insercion;
+            $controltoll->usuario_id = $request->usuario_id;
+            $controltoll->juegollaves = $request->checkJuegoLlaves;
+            $controltoll->juegodados = $request->checkJuegoDados;
+            $controltoll->cuter = $request->checkCuter;
+            $controltoll->arnes = $request->checkArnes;
+            $controltoll->save();
             return response()->json([
                 'response'=>1
                 ]

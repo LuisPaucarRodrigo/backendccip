@@ -31,3 +31,11 @@ Route::get('/notificaciones',[\App\Http\Controllers\ApiController::class,'notifi
 Route::post('/task',[\App\Http\Controllers\ApiController::class,'task']);
 
 Route::post('/taskState',[\App\Http\Controllers\ApiController::class,'taskState']);
+
+
+Route::post('/checkCarDoc',[\App\Http\Controllers\ApiController::class,'checkCarDoc']);
+Route::post('/checkStateCarEquipment',[\App\Http\Controllers\ApiController::class,'checkStateCarEquipment']);
+Route::post('/checkStateCar',[\App\Http\Controllers\ApiController::class,'checkStateCar']);
+Route::post('/checkControlEquipmentTools',[\App\Http\Controllers\ApiController::class,'checkControlEquipmentTools']);
+Route::post('/checkControlKitTools',[\App\Http\Controllers\ApiController::class,'checkControlKitTools']);
+Route::post('/checkControlTools',[\App\Http\Controllers\ApiController::class,'checkControlTools']);
