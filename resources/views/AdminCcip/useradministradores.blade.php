@@ -35,9 +35,9 @@
                 <td>{{ $user->rol }}</td>
                 <td>
                     <!-- Botón para abrir la ventana modal de edición -->
-                    <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#editUserModal{{ $user->id }}">
+                    <a href="/home/editaradmin/{{ $user->id }}" type="button" class="btn btn-warning">
                         Editar
-                    </button>
+                    </a>
                 </td>
             </tr>
             @endforeach

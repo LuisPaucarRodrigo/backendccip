@@ -7,54 +7,50 @@
 @stop
 
 @section('content')
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card shadow-lg p-5">
+                    <h3 class="mb-4 text-center">Registrarse</h3>
+                    <form action="/register" method="post">
+                        @csrf
 
-<section class="vh-100" style="background-color: #508bfc;">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                <div class="card shadow-2-strong" style="border-radius: 1rem;">
-                    <div class="card-body p-5 text-center">
-                        <form action="/register" method="post">
-                            @csrf
-                            <h3 class="mb-5">Registrarse</h3>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre</label>
+                            <input type="text" name="name" class="form-control" required>
+                        </div>
 
-                            <div class="form-outline mb-4">
-                                <input type="text" name="name" class="form-control form-control-lg" />
-                                <label class="form-label" for="typeEmailX-2">Nombre</label>
-                            </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" required>
+                        </div>
 
-                            <div class="form-outline mb-4">
-                                <input type="email" name="email" class="form-control form-control-lg" />
-                                <label class="form-label" for="typeEmailX-2">Email</label>
-                            </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" name="password" class="form-control" required>
+                        </div>
 
-                            <div class="form-outline mb-4">
-                                <input type="password" name="password" class="form-control form-control-lg" />
-                                <label class="form-label" for="typePasswordX-2">Contraseña</label>
-                            </div>
+                        <div class="mb-3">
+                            <label for="password_confirmation" class="form-label">Confirma contraseña</label>
+                            <input type="password" name="password_confirmation" class="form-control" required>
+                        </div>
 
-                            <div class="form-outline mb-4">
-                                <input type="password" name="password_confirmation" class="form-control form-control-lg" />
-                                <label class="form-label" for="typePasswordX-2">Confirma contraseña</label>
-                            </div>
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Rol</label>
+                            <select name="role" class="form-select">
+                                <option value="Admin">Admin</option>
+                                <option value="Asistente">Asistente</option>
+                            </select>
+                        </div>
 
-                            <div class="form-outline mb-4">
-                                <select name="role" class="form-select form-select-lg">
-                                    <option value="Admin">Admin</option>
-                                    <option value="Asistente">Asistente</option>
-                                </select>
-                                <label class="form-label" for="role">Rol</label>
-                            </div>
-
-                            <input class="btn btn-primary btn-lg btn-block" type="submit" value="Registrarse">
-
-                        </form>
-                    </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Registrarse</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</section>
 @stop
 
 @section('css')

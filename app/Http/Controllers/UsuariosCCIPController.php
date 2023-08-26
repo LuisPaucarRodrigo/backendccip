@@ -17,9 +17,23 @@ use Illuminate\Support\Str;
 
 class UsuariosCCIPController extends Controller
 {   
+    public function updateuseradmin(Request $request){
+        $updateadmin = user::find($request->input('id'));
+        $updateadmin->name = $request->input('name');
+        $updateadmin->email = $request->input('email');
+        $updateadmin->rol = $request->input('rol');
+        $updateadmin->save();
+        return redirect('/administradores');
+    }
+
+    public function editaradmin($id){
+        $useredit = user::find($id);
+        //dd($useredit);
+        return view('AdminCcip.editadministradores',compact('useredit'));
+    }
     public function useradministradores(){
         $users = user::all();
-        return view('CCIP.useradministradores',compact('users'));
+        return view('AdminCcip.useradministradores',compact('users'));
     }
 
     public function index(){

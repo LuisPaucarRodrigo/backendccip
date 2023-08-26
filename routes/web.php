@@ -49,6 +49,10 @@ Route::middleware(['admin', 'can:admin.general'])->group(function () {
     Route::get('/home/edit/password/{id}',[\App\Http\Controllers\UsuariosCCIPController::class,'edit_password'] );
     Route::post('/home/update/password/{id}',[\App\Http\Controllers\UsuariosCCIPController::class,'update_password'] );
 
+    //usersadmin
+    Route::get('/home/editaradmin/{id}',[\App\Http\Controllers\UsuariosCCIPController::class,'editaradmin'] );
+    Route::post('/home/updateuseradmin',[\App\Http\Controllers\UsuariosCCIPController::class,'updateuseradmin'] );
+
     //Reportes
     Route::post('home/generate',[\App\Http\Controllers\HomeController::class,'generate']);
     Route::get('/home/reportes',[\App\Http\Controllers\HomeController::class,'generar']);

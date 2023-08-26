@@ -325,12 +325,12 @@ return [
                 [
                     'text'        => 'Usuarios Administradores',
                     'url'         => 'administradores',
-                    'icon' =>'fas fa-fw fa-user',
+                    'icon' =>'fas fa-fw fa-user-cog',
                     'label_color' => 'success',
                 ],[
                     'text'        => 'Usuarios App',
                     'url'         => 'home',
-                    'icon' =>'fas fa-fw fa-user',
+                    'icon' =>'fas fa-fw fa-mobile',
                     'label_color' => 'success',
                 ]
             ]
@@ -339,7 +339,7 @@ return [
         [
             'text'        => 'Tareas',
             'url'         => '/home/tareas',
-            'icon' => 'fas fa-fw fa-file',
+            'icon' => 'fas fa-fw fa-tasks',
             'label_color' => 'success',
             'can' => 'admin.general',
         ],
@@ -347,7 +347,7 @@ return [
         [
             'text'        => 'Reportes',
             'url'         => '/home/reportes',
-            'icon' => 'fas fa-fw fa-file',
+            'icon' => 'fas fa-fw fa-file-excel',
             'label_color' => 'success',
             'can' => 'admin.administracion.reportes'
         ],
