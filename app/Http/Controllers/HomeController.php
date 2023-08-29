@@ -9,6 +9,15 @@ use App\Exports\OtrosExport;
 use App\Exports\PeajeExport;
 use App\Exports\TrasladoExport;
 use App\Exports\RecargaExport;
+use App\Exports\TareaExport;
+use App\Exports\KitHerramientasExport;
+use App\Exports\EquipHerramientasExport;
+use App\Exports\ControlHerramientasExport;
+use App\Exports\DocumentosCamionetaExport;
+use App\Exports\EquiposCamionetaExport;
+use App\Exports\EstadoCamionetaExport;
+use App\Exports\EstadoCamiontaExport;
+
 use App\Http\Requests\reporteRequest;
 use Illuminate\Http\Request;
 use App\Models\Cgep;
@@ -16,6 +25,8 @@ use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\UsuarioCCIP as usuarios;
 use App\Models\Combustible;
+use App\Models\Controltool;
+use App\Models\Equipmenttoll;
 use App\Models\Notification;
 use App\Models\Operaciones;
 use App\Models\Tarea;
@@ -148,6 +159,20 @@ class HomeController extends Controller
                 return Excel::download(new CgepExport($inicio,$fin), 'Cgep '.$date.'.xlsx');
             case('6'):
                 return Excel::download(new RecargaExport($inicio,$fin), 'Recarga '.$date.'.xlsx');
+            case('7'):
+                return Excel::download(new TareaExport($inicio,$fin), 'Tareas '.$date.'.xlsx');
+            case('8'):
+                return Excel::download(new KitHerramientasExport($inicio,$fin), 'KitHerramientas '.$date.'.xlsx');
+            case('9'):
+                return Excel::download(new EquiposCamionetaExport($inicio,$fin), 'EquiposHerramientas '.$date.'.xlsx');
+            case('10'):
+                return Excel::download(new ControlHerramientasExport($inicio,$fin), 'ControlHerramientas '.$date.'.xlsx');
+            case('11'):
+                return Excel::download(new DocumentosCamionetaExport($inicio,$fin), 'DocumentosCamioneta '.$date.'.xlsx');
+            case('12'):
+                return Excel::download(new EquiposCamionetaExport($inicio,$fin), 'EquiposCamioneta '.$date.'.xlsx');
+            case('13'):
+                return Excel::download(new EstadoCamionetaExport($inicio,$fin), 'EstadoCamioneta '.$date.'.xlsx');
             default:
                 return redirect('/home');
         }
@@ -165,28 +190,28 @@ class HomeController extends Controller
     }
 
     public function generatepdf(){
-        // ... Lógica previa para obtener los datos del formulario ...
-        $date = Carbon::now()->format('Y-m-d');
-        $iniciopdf = request('fecha_inicio') . ' 00:00:00';
-        $finalpdf = request('fecha_fin') . ' 23:59:59';
-        $usuariospdf = request('usuariospdf');
+        // // ... Lógica previa para obtener los datos del formulario ...
+        // $date = Carbon::now()->format('Y-m-d');
+        // $iniciopdf = request('fecha_inicio') . ' 00:00:00';
+        // $finalpdf = request('fecha_fin') . ' 23:59:59';
+        // $usuariospdf = request('usuariospdf');
 
-        $combustibles = Combustible::where('usuario_id', $usuariospdf)
-        ->whereBetween('fecha_insercion', [$iniciopdf, $finalpdf])
-        ->get();
+        // $combustibles = Combustible::where('usuario_id', $usuariospdf)
+        // ->whereBetween('fecha_insercion', [$iniciopdf, $finalpdf])
+        // ->get();
 
-        // Pasar los datos a la vista pdf.blade.php
-        $pdf = PDF::loadView('informes.pdf', [
-            'usuario' => $usuariospdf,
-            'fecha_Inicio' => $iniciopdf,
-            'fecha_Fin' => $finalpdf,
-            'combustibles' => $combustibles
-        ]);
+        // // Pasar los datos a la vista pdf.blade.php
+        // $pdf = PDF::loadView('informes.pdf', [
+        //     'usuario' => $usuariospdf,
+        //     'fecha_Inicio' => $iniciopdf,
+        //     'fecha_Fin' => $finalpdf,
+        //     'combustibles' => $combustibles
+        // ]);
 
-        $pdf->setPaper('letter'); // Ajusta el tamaño del papel del PDF si es necesario.
+        // $pdf->setPaper('letter'); // Ajusta el tamaño del papel del PDF si es necesario.
 
-        // Descargar el PDF.
-        return $pdf->download("reporte_{$date}.pdf");
+        // // Descargar el PDF.
+        // return $pdf->download("reporte_{$date}.pdf");
     
     }
     public function downloadImageToLocal($url){

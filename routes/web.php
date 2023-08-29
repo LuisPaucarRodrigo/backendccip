@@ -43,7 +43,7 @@ Route::middleware(['admin', 'can:admin.general'])->group(function () {
     //UsuariosCCIPController
     Route::get('/home/nuevoUsuario', function (){return view('CCIP.newUser');});
     Route::post('/home/createuser', [\App\Http\Controllers\UsuariosCCIPController::class,'create']);
-    Route::get('/home/liquidarUsuario/{id}', [\App\Http\Controllers\UsuariosCCIPController::class,'liquidar']);
+    Route::get('/home/liquidarUsuario', [\App\Http\Controllers\UsuariosCCIPController::class,'liquidar']);
     Route::get('/home/mostrarUsuario/{id}', [\App\Http\Controllers\UsuariosCCIPController::class,'modify']);
     Route::post('/home/update/{id}', [\App\Http\Controllers\UsuariosCCIPController::class,'update']);
     Route::get('/home/edit/password/{id}',[\App\Http\Controllers\UsuariosCCIPController::class,'edit_password'] );

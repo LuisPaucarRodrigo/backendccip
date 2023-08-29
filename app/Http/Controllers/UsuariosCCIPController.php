@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CCIPRequest;
 use App\Http\Requests\forgotRequest;
+use App\Models\Cgep;
+use App\Models\Combustible;
 use App\Models\Operaciones;
+use App\Models\Peaje;
 use App\Models\Recarga;
 use App\Models\User;
 use App\Models\UsuarioCCIP;
@@ -127,25 +130,29 @@ class UsuariosCCIPController extends Controller
 
         
     }
-    public function liquidar($id){
+    public function liquidar(){
 
-        $usuario = UsuarioCCIP::all('id','saldo','monto_total','egresos')->where('id',"=",$id)->first();
-        if($usuario->saldo < 0){
-            $finalregister = new UsuarioCCIP();
-            $finalregister -> egresos = $usuario -> saldo * (-1);
-            $finalregister -> monto_total = 0;
-            $finalregister -> saldo = $usuario -> saldo;
-            $finalregister -> save();
-        }elseif($usuario->saldo > 0){
-            $finalregister = new UsuarioCCIP();
-            $finalregister -> egresos = 0;
-            $finalregister -> monto_total = $usuario -> saldo * (-1);
-            $finalregister -> saldo = $usuario -> saldo;
-            $finalregister -> save();
-        }
-        // $usuario->monto_total = 0;
-        // $usuario->saldo = 0;
-        // $usuario->save();
+        $usuario = UsuarioCCIP::all('id','saldo','monto_total','egresos');
+        foreach($usuario as $user){
+            $recarga = Recarga::where('usuario_id', $user->id)
+            ->latest()
+            ->first();
+            //dd($recarga);
+            if($user->saldo < 0){
+                $recarga -> monto += $user->saldo;
+                $user -> egresos = $user -> saldo * (-1);
+                $user -> monto_total = 0;
+                $user -> saldo = $user -> saldo;
+                
+            }elseif($user->saldo > 0){
+                $recarga->monto -= $user->saldo;
+                $user -> egresos = 0;
+                $user -> monto_total = $user -> saldo;
+                $user -> saldo = $user -> saldo;
+            }
+            $user -> save();
+            $recarga->save();
+        };
         return redirect('/home');
     }
 }

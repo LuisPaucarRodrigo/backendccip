@@ -24,9 +24,11 @@
             </div>
         @endif
 
-        <a type="button" href="/home/nuevoUsuario" class="btn btn-success">+ Agregar</a>
-        <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#notificationmodal">+ Notificar</a>
-
+        <div class="justify-content-between">
+            <a type="button" href="/home/nuevoUsuario" class="btn btn-success">+ Agregar</a>
+            <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#notificationmodal">+ Notificar</a>
+            <button type="button" class="btn btn-warning text-end" onclick="mostrarConfirmacion()">Liquidar</button>
+        </div>
         <div class="modal fade" id="notificationmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="notificationmodalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -59,20 +61,19 @@
         <br>
         <table id="example" class="table table-striped" >
             <thead>
-            <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">DNI</th>
-                <th scope="col">Nombre de Usuario</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Depositos Acumulado del Mes</th>
-                <th scope="col">Egresos Acumulados del Mes</th>
-                <th scope="col">Saldo</th>
-                <th scope="col">Liquidar</th>
-                <th scope="col">Recargar</th>
-                <th scope="col">Editar</th>
-            </tr>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">DNI</th>
+                    <th scope="col">Nombre de Usuario</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Depositos Acumulado del Mes</th>
+                    <th scope="col">Egresos Acumulados del Mes</th>
+                    <th scope="col">Saldo</th>
+                    <th scope="col">Recargar</th>
+                    <th scope="col">Editar</th>
+                </tr>
             </thead>
             <tbody>
             @foreach($usuarios as $usuarios)
@@ -86,7 +87,6 @@
                     <td>S/{{$usuarios->monto_total}}</td>
                     <td>S/{{$usuarios->egresos}}</td>
                     <td>S/{{$usuarios->saldo}}</td>
-                    <td><a class="btn btn-warning" href="/home/liquidarUsuario/{{$usuarios->id}}">Liquidar</a></td>
                     <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$usuarios->id}}">Recargar</button></td>
                     <td><a class="btn btn-warning" href="/home/mostrarUsuario/{{$usuarios->id}}">Editar</a></td>
                 </tr>
@@ -208,5 +208,17 @@
             });
         });
     </script>
+    <script>
+        function mostrarConfirmacion() {
+            var confirmacion = window.confirm("¿Estás seguro de que deseas liquidar?");
+            
+            if (confirmacion) {
+                window.location.href = "/home/liquidarUsuario";
+            } else {
+                // Aquí puedes manejar el caso en el que el usuario cancela la acción.
+            }
+        }
+    </script>
+
 @stop
 

@@ -45,6 +45,13 @@
                             <option value="4">Otros</option>
                             <option value="5">Cgep</option>
                             <option value="6">Recargas</option>
+                            <option value="7">Tareas</option>
+                            <option value="8">Control Kit Herramientas</option>
+                            <option value="9">Control Equipos de Herramientas</option>
+                            <option value="10">Control de Herramientas</option>
+                            <option value="11">Control Documentos Camioneta</option>
+                            <option value="12">Control Equipos de Camioneta</option>
+                            <option value="13">Control Estado Camioneta</option>
                         </select>
                     </div>
                     <br>
