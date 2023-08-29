@@ -17,9 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {return redirect('/home');});
 Route::get('/php', function () {return view('welcome');});
 
-Route::get('/register', function () {return view('auth.register');});
-Route::post('/register', [\App\Http\Controllers\RegisterController::class,'register']); 
-
 Route::get('/login', [\App\Http\Controllers\LoginController::class,'show']);
 Route::post('/login', [\App\Http\Controllers\LoginController::class,'login']);
 Route::post('/logout', [\App\Http\Controllers\LoginController::class,'logout']);
@@ -37,7 +34,9 @@ Route::middleware(['admin', 'can:admin.general'])->group(function () {
     Route::get('/administradores', [\App\Http\Controllers\UsuariosCCIPController::class,'useradministradores']);
 
     
-    //LoginController
+    //Register
+    Route::get('/register', function () {return view('auth.register');});
+    Route::post('/register', [\App\Http\Controllers\RegisterController::class,'register']); 
     
 
     //UsuariosCCIPController
