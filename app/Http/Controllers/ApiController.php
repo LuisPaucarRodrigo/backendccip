@@ -331,13 +331,18 @@ class ApiController extends Controller
     }
 
     public function notification(Request $request){
-        $notify = Notification::first();
-        return response()->json([
-            'response'=>1,
-            'titulo'=> $notify->Titulo,
-            'mensaje' => $notify->Mensaje
-            ]
-        );
+        $notify = Notification::latest()->first();
+        if ($notify) {
+            return response()->json([
+                'response' => 1,
+                'titulo' => $notify->Titulo,
+                'mensaje' => $notify->Mensaje
+            ]);
+        } else {
+            return response()->json([
+                'response' => 0,
+            ]);
+        }
     }
 
     public function task(Request $request){
