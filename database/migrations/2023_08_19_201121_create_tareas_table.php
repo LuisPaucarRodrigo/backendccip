@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('tareas', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
-            $table->string('mensaje');
+            $table->string('mensaje',1000);
             $table->date('fechaCreacion');
             $table->date('fechaVencimiento');
             $table->string('state')->default('Iniciar');

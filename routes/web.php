@@ -21,6 +21,8 @@ Route::get('/login', [\App\Http\Controllers\LoginController::class,'show']);
 Route::post('/login', [\App\Http\Controllers\LoginController::class,'login']);
 Route::post('/logout', [\App\Http\Controllers\LoginController::class,'logout']);
 
+
+
 Route::middleware(['admin', 'can:admin.general'])->group(function () {
     //Gneral
     Route::get('/home/general',[\App\Http\Controllers\HomeController::class,'general']);

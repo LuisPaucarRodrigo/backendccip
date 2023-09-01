@@ -12,7 +12,7 @@
             @csrf
             <div class="col-md-6">
                 <label class="form-label" for="exampleInputEmail1" >Nombre</label>
-                <input class="form-control" type="text" name="name" aria-describedby="emailHelp" value="{{ old('name') }}">
+                <input class="form-control" type="text" name="name" aria-describedby="emailHelp" value="{{ old('name') }}" require>
                 @if ($errors->get('name'))
                     @foreach ($errors->get('name') as $error)
                         <p class="text-danger">
@@ -23,7 +23,7 @@
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="exampleInputPassword1" >Apellido</label>
-                <input class="form-control" type="text" name="lastname" aria-describedby="emailHelp" value="{{ old('lastname') }}">
+                <input class="form-control" type="text" name="lastname" aria-describedby="emailHelp" value="{{ old('lastname') }}" require>
                 @if ($errors->get('lastname'))
                     @foreach ($errors->get('lastname') as $error)
                         <p class="text-danger">
@@ -35,7 +35,7 @@
 
             <div class="col-md-6">
                 <label class="form-label" for="exampleInputEmail1" >Nombre de Usuario</label>
-                <input class="form-control" type="text"  name="username" value="{{ old('username') }}">
+                <input class="form-control" type="text"  name="username" value="{{ old('username') }}" require>
                 @if ($errors->get('username'))
                     @foreach ($errors->get('username') as $error)
                         <p class="text-danger">
@@ -46,7 +46,7 @@
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="exampleInputPassword1" >Correo</label>
-                <input class="form-control" type="text" name="email" aria-describedby="emailHelp" value="{{ old('email') }}">
+                <input class="form-control" type="text" name="email" aria-describedby="emailHelp" value="{{ old('email') }}" require>
                 @if ($errors->get('email'))
                     @foreach ($errors->get('email') as $error)
                         <p class="text-danger">
@@ -58,7 +58,7 @@
 
             <div class="col-md-6">
                 <label class="form-label" for="exampleInputPassword1" >DNI</label>
-                <input class="form-control" type="text" name="dni" maxlength="8" aria-describedby="emailHelp" value="{{ old('dni') }}">
+                <input class="form-control" type="text" name="dni" maxlength="8" aria-describedby="emailHelp" value="{{ old('dni') }}" require>
                 @if ($errors->get('dni'))
                     @foreach ($errors->get('dni') as $error)
                         <p class="text-danger">
@@ -70,11 +70,11 @@
 
             <div class="col-md-6">
                 <label class="form-label" for="exampleInputPassword1" >Saldo</label>
-                <input class="form-control" type="number" name="saldo"  value="{{ old('saldo') }}" placeholder="0.00">
+                <input class="form-control" type="number" name="saldo"  value="{{ old('saldo') }}" placeholder="0.00" require>
             </div>
             <div class="col-md-4">
                 <label class="form-label" for="exampleInputPassword1" >Contraseña</label>
-                <input class="form-control" type="password" name="password" value="{{ old('password') }}">
+                <input class="form-control" type="password" name="password" value="{{ old('password') }}" require>
                 @if ($errors->get('password'))
                     @foreach ($errors->get('password') as $error)
                         <p class="text-danger">

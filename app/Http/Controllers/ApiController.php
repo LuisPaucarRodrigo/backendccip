@@ -350,7 +350,7 @@ class ApiController extends Controller
         if ($v){
             $now = Carbon::now();
             $task = Tarea::with("UsuarioCCIP")->where('usuario_id',"=",$request->usuario_id)
-                ->whereDate('created_at', $now->toDateString())
+                ->whereDate('fechaVencimiento','>=', now())
                 ->get()->take(20);
             return response()->json([
                 'response'=>1,
