@@ -151,7 +151,7 @@ class UsuariosCCIPController extends Controller
                 $newrecarga = new Recarga();
                 $newrecarga->opcion = $recarga ->opcion;
                 $newrecarga->cuadrilla = $recarga ->cuadrilla;
-                $newrecarga->monto = $recarga ->monto;
+                $newrecarga->monto = $user -> saldo;
                 $newrecarga->numero_operacion = $recarga ->numeroOperacion;
                 $newrecarga->fecha_recarga = $recarga ->dateCuadrilla;
                 $newrecarga->concepto = $recarga ->texto;
