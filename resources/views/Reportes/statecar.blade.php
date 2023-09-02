@@ -10,6 +10,7 @@
             <th>Control de Gastos</th>
             <th>Cuadrilla</th>
             <th>Fecha de Inserción</th>
+            <th>Placa</th>
             <th>Bocina</th>
             <th>Frenos</th>
             <th>Luces Altas/Bajas</th>
@@ -26,6 +27,10 @@
             <th>Parabrisas</th>
             <th>Motor</th>
             <th>Batería</th>
+            <th>ImagenFrontal</th>
+            <th>ImagenIzquierdo</th>
+            <th>ImagenDerecha</th>
+            <th>ImagenInterna</th>
             <th>Personal</th>
         </tr>
     </thead>
@@ -37,6 +42,7 @@
             <td>{{ $statecar->control_gastos }}</td> 
             <td>{{ $statecar->cuadrilla }}</td>     
             <td>{{ $statecar->fecha_insercion }}</td>
+            <td>{{ $statecar->placa }}</td>
             <td>{{ $statecar->bocina }}</td>
             <td>{{ $statecar->frenos}}</td>
             <td>{{ $statecar->lucesaltasbajas}}</td>
@@ -53,6 +59,10 @@
             <td>{{ $statecar->parabrisas}}</td>
             <td>{{ $statecar->motor}}</td>
             <td>{{ $statecar->bateria}}</td>
+            <td>{{ $statecar->foto_front}}</td>
+            <td>{{ $statecar->foto_left}}</td>
+            <td>{{ $statecar->foto_right}}</td>
+            <td>{{ $statecar->foto_interno}}</td>
             <td>{{ $statecar->UsuarioCCIP->name}}</td>
         </tr>
     @endforeach

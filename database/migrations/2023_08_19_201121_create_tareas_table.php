@@ -20,7 +20,6 @@ return new class extends Migration
             $table->date('fechaCreacion');
             $table->date('fechaVencimiento');
             $table->string('state')->default('Iniciar');
-            $table->string('prioridad');
             $table->foreignId('usuario_id')->references('id')->on('usuario_c_c_i_p_s');
             $table->timestamps();
         });

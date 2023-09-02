@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('control_gastos');
             $table->string('cuadrilla');
             $table->dateTime('fecha_insercion');
+            $table->string('placa');
             $table->string('bocina');
             $table->string('frenos');
             $table->string('lucesaltasbajas');
@@ -34,6 +35,10 @@ return new class extends Migration
             $table->string('parabrisas');
             $table->string('motor');
             $table->string('bateria');
+            $table->string('foto_front');
+            $table->string('foto_left');
+            $table->string('foto_right');
+            $table->string('foto_interno');
             $table->foreignId('usuario_id')->references('id')->on('usuario_c_c_i_p_s');
             $table->timestamps();
         });

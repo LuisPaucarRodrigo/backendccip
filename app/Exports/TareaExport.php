@@ -24,14 +24,13 @@ class TareaExport implements FromView,WithColumnWidths
     public function columnWidths(): array{
         return [
             'A' => 5,
-            'B' => 9,
-            'C' => 12,
-            'D' => 15,
-            'E' => 15,
+            'B' => 10,
+            'C' => 15,
+            'D' => 18,
+            'E' => 18,
             'F' => 18,
-            'G' => 18,
-            'H' => 35,
-            'I' => 15,
+            'G' => 13,
+            'h' => 15,
         ];
     }
 }

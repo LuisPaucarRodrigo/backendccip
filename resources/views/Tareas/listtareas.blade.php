@@ -84,14 +84,6 @@
                         <input type="text" class="form-control" id="titulo" name="titulo" required>
                     </div>
                     <div class="form-group">
-                      <label for="prioridad">Prioridad de la Tarea:</label>
-                      <select class="form-control" id="prioridad" name="prioridad">
-                          <option value="alta">Alta</option>
-                          <option value="media">Media</option>
-                          <option value="baja">Baja</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
                       <label for="fechaCreacion">Fecha de Creación:</label>
                       <input type="date" class="form-control" id="fechaCreacion" name="fechaCreacion" min="<?= date('Y-m-d'); ?>" required>
                     </div>

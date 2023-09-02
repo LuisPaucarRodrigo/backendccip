@@ -131,8 +131,7 @@ class UsuariosCCIPController extends Controller
         
     }
     public function liquidar(){
-
-        $usuario = UsuarioCCIP::all('id','saldo','monto_total','egresos');
+        $usuario = UsuarioCCIP::all();
         foreach($usuario as $user){
             $recarga = Recarga::where('usuario_id', $user->id)
             ->latest()
@@ -149,6 +148,15 @@ class UsuariosCCIPController extends Controller
                 $user -> egresos = 0;
                 $user -> monto_total = $user -> saldo;
                 $user -> saldo = $user -> saldo;
+                $newrecarga = new Recarga();
+                $newrecarga->opcion = $recarga ->opcion;
+                $newrecarga->cuadrilla = $recarga ->cuadrilla;
+                $newrecarga->monto = $recarga ->monto;
+                $newrecarga->numero_operacion = $recarga ->numeroOperacion;
+                $newrecarga->fecha_recarga = $recarga ->dateCuadrilla;
+                $newrecarga->concepto = $recarga ->texto;
+                $newrecarga->usuario_id = $recarga -> usuarioId;
+                $newrecarga -> save();
             }
             $user -> save();
             $recarga->save();

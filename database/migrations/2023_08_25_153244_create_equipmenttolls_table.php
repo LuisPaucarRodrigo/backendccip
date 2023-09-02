@@ -33,12 +33,14 @@ return new class extends Migration
             $table->string('powermeter');
             $table->string('pistola');
             $table->string('pertiga');
-            $table->string('cuter');
             $table->string('escalera');
             $table->string('extension');
             $table->string('pistolaestano');
             $table->string('escaleratijera');
-            $table->string('carrito');
+            $table->string('pulverizadora');
+            $table->string('testeadorrj45');
+            $table->string('cableconsolared');
+            $table->string('adaptadorred');
             $table->foreignId('usuario_id')->references('id')->on('usuario_c_c_i_p_s');
             $table->timestamps();
         });

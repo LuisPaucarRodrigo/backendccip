@@ -48,10 +48,10 @@
                             <option value="7">Tareas</option>
                             <option value="8">Control Kit Herramientas</option>
                             <option value="9">Control Equipos de Herramientas</option>
-                            <option value="10">Control de Herramientas</option>
-                            <option value="11">Control Documentos Camioneta</option>
-                            <option value="12">Control Equipos de Camioneta</option>
-                            <option value="13">Control Estado Camioneta</option>
+                            <option value="10">Control de EPP</option>
+                            <option value="11">Documentos Movil</option>
+                            <option value="12">Checklist Equipamento Movil</option>
+                            <option value="13">Checklist Unidad Movil</option>
                         </select>
                     </div>
                     <br>

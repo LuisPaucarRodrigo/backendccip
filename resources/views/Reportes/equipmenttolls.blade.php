@@ -25,12 +25,14 @@
             <th>Power Meter</th>
             <th>Pistola</th>
             <th>Pértiga</th>
-            <th>Cúter</th>
             <th>Escalera</th>
             <th>Extensión</th>
             <th>Pistola de Estaño</th>
             <th>Escalera Tijera</th>
-            <th>Carrito</th>
+            <th>Pulverizadora</th>
+            <th>TesteadorRJ45</th>
+            <th>Cable Consola/Red</th>
+            <th>Adaptador Red</th>
             <th>Personal</th>
         </tr>
     </thead>
@@ -57,12 +59,14 @@
             <td>{{ $equiptoll->powermeter }}</td>
             <td>{{ $equiptoll->pistola }}</td>
             <td>{{ $equiptoll->pertiga }}</td>
-            <td>{{ $equiptoll->cuter }}</td>
             <td>{{ $equiptoll->escalera }}</td>
             <td>{{ $equiptoll->extension }}</td>
             <td>{{ $equiptoll->pistolaestano }}</td>
             <td>{{ $equiptoll->escaleratijera }}</td>
-            <td>{{ $equiptoll->carrito }}</td>
+            <td>{{ $equiptoll->pulverizadora }}</td>
+            <td>{{ $equiptoll->testeadorrj45 }}</td>
+            <td>{{ $equiptoll->cableconsolared }}</td>
+            <td>{{ $equiptoll->adaptadorred }}</td>
             <td>{{ $equiptoll->UsuarioCCIP->name}}</td>
         </tr>
     @endforeach

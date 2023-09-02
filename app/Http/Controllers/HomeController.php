@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\CgepExport;
 use App\Exports\CombustibleExport;
+use App\Exports\ControlEppExport;
 use App\Exports\OperacionExport;
 use App\Exports\OtrosExport;
 use App\Exports\PeajeExport;
@@ -41,7 +42,6 @@ class HomeController extends Controller
         $task = new Tarea();
         $task->usuario_id = request()->input('usuario_id');
         $task->titulo = request()->input('titulo');
-        $task->prioridad = request()->input('prioridad');
         $task->fechaCreacion = request()->input('fechaCreacion');
         $task->fechaVencimiento = request()->input('fechaVencimiento');
         $task->mensaje = request()->input('descripcion');
@@ -164,9 +164,9 @@ class HomeController extends Controller
             case('8'):
                 return Excel::download(new KitHerramientasExport($inicio,$fin), 'KitHerramientas '.$date.'.xlsx');
             case('9'):
-                return Excel::download(new EquiposCamionetaExport($inicio,$fin), 'EquiposHerramientas '.$date.'.xlsx');
+                return Excel::download(new EquipHerramientasExport($inicio,$fin), 'EquiposHerramientas '.$date.'.xlsx');
             case('10'):
-                return Excel::download(new ControlHerramientasExport($inicio,$fin), 'ControlHerramientas '.$date.'.xlsx');
+                return Excel::download(new ControlEppExport($inicio,$fin), 'ControlEpp '.$date.'.xlsx');
             case('11'):
                 return Excel::download(new DocumentosCamionetaExport($inicio,$fin), 'DocumentosCamioneta '.$date.'.xlsx');
             case('12'):

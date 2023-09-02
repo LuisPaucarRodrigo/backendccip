@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cardoc;
 use App\Models\Cgep;
 use App\Models\Combustible;
-use App\Models\Controltool;
+use App\Models\Controlepp;
 use App\Models\Equipmentcar;
 use App\Models\Equipmenttoll;
 use App\Models\Kittoll;
@@ -144,6 +144,7 @@ class ApiController extends Controller
                 $ruta2 = "192.168.1.80:8000/imagenes/".$path;
                 File::put(public_path('imagenes/').$path,$imageContnt2);
                 $combustible->foto_factura = $ruta2;
+
                 $combustible->control_gastos = $request->control_gastos;
                 $combustible->cuadrilla = $request->cuadrilla;
                 $combustible->fecha_insercion = $request->fecha_insercion;
@@ -351,6 +352,7 @@ class ApiController extends Controller
             $now = Carbon::now();
             $task = Tarea::with("UsuarioCCIP")->where('usuario_id',"=",$request->usuario_id)
                 ->whereDate('fechaVencimiento','>=', now())
+                ->orderBy('fechaCreacion', 'asc')
                 ->get()->take(20);
             return response()->json([
                 'response'=>1,
@@ -387,6 +389,7 @@ class ApiController extends Controller
             $equipmentcar->cuadrilla = $request->cuadrilla;
             $equipmentcar->fecha_insercion = $request->fecha_insercion;
             $equipmentcar->usuario_id = $request->usuario_id;
+            $equipmentcar->placa = $request->checkPlaca;
             $equipmentcar->extintor = $request->checkExtintor;
             $equipmentcar->botiquin = $request->checkBotiquin;
             $equipmentcar->conos = $request->checkConos;
@@ -417,11 +420,13 @@ class ApiController extends Controller
     public function checkStateCar(Request $request){
         $v = $this->validar($request->usuario_id,$request->token);
         if ($v){
+            $date = Carbon::now()->format('Y-m-d');
             $statecar = new Statecar();
             $statecar->control_gastos = $request->control_gastos;
             $statecar->cuadrilla = $request->cuadrilla;
             $statecar->fecha_insercion = $request->fecha_insercion;
             $statecar->usuario_id = $request->usuario_id;
+            $statecar->placa = $request->placa;
             $statecar->bocina = $request->bocina;
             $statecar->frenos = $request->frenos;
             $statecar->lucesaltasbajas = $request->lucesaltasbajas;
@@ -438,6 +443,24 @@ class ApiController extends Controller
             $statecar->parabrisas = $request->parabrisas;
             $statecar->motor = $request->motor;
             $statecar->bateria = $request->bateria;
+
+            $images = [
+                'foto_front' => $request->foto_front,
+                'foto_left' => $request->foto_left,
+                'foto_right' => $request->foto_right,
+                'foto_interno' => $request->foto_interno,
+            ];
+            
+            foreach ($images as $key => $imageData) {
+                $imageData = str_replace('data:image/png;base64,', '', $imageData);
+                $imageData = str_replace(' ', '+', $imageData);
+                $imageContent = base64_decode($imageData);
+                $path = $key . $date . time() . '.png';
+                $ruta = "192.168.1.80:8000/imagenes/" . $path;
+                File::put(public_path('imagenes/') . $path, $imageContent);
+                $statecar->{$key} = $ruta;
+            }            
+
             $statecar->save();
             return response()->json([
                 'response'=>1
@@ -457,6 +480,7 @@ class ApiController extends Controller
             $cardoc->cuadrilla = $request->cuadrilla;
             $cardoc->fecha_insercion = $request->fecha_insercion;
             $cardoc->usuario_id = $request->usuario_id;
+            $cardoc->placa = $request->checkPlaca;
             $cardoc->circulacion = $request->checkCirculacion;
             $cardoc->tecnica = $request->checkTecnica;
             $cardoc->soat = $request->checkSoat;
@@ -495,12 +519,14 @@ class ApiController extends Controller
             $tollEquipment->powermeter = $request->powermeter;
             $tollEquipment->pistola = $request->pistola;
             $tollEquipment->pertiga = $request->pertiga;
-            $tollEquipment->cuter = $request->cuter;
             $tollEquipment->escalera = $request->escalera;
             $tollEquipment->extension = $request->extension;
             $tollEquipment->pistolaestano = $request->pistolaestano;
             $tollEquipment->escaleratijera = $request->escaleratijera;
-            $tollEquipment->carrito = $request->carrito;
+            $tollEquipment->pulverizadora = $request->pulverizadora;
+            $tollEquipment->testeadorrj45 = $request->rj45;
+            $tollEquipment->cableconsolared = $request->consolared;
+            $tollEquipment->adaptadorred = $request->adaptador;
             $tollEquipment->save();
             return response()->json([
                 'response'=>1
@@ -520,28 +546,59 @@ class ApiController extends Controller
             $kittoll->cuadrilla = $request->cuadrilla;
             $kittoll->fecha_insercion = $request->fecha_insercion;
             $kittoll->usuario_id = $request->usuario_id;
+            $kittoll->otros = $request->others;
             $kittoll->mosqueton = $request->checkMosqueton;
+            $kittoll->amountmosqueton = $request->txtAmountMosqueton;
             $kittoll->pelacable = $request->checkPelacable;
+            $kittoll->amountpelacable = $request->txtAmountPelacable;
             $kittoll->crimpeadora = $request->checkCrimpeadora;
+            $kittoll->amountcrimpeadora = $request->txtAmountCrimpeadora;
+            $kittoll->crimpeadorater = $request->checkCrimpeadoraTer;
+            $kittoll->amountcrimpeadorater = $request->txtAmountCrimpeadorater;
             $kittoll->limas = $request->checkLimas;
+            $kittoll->amountlimas = $request->txtAmountLimas;
             $kittoll->allen = $request->checkAllen;
+            $kittoll->amountallen = $request->txtAmountAllen;
             $kittoll->readline = $request->checkKitReadline;
+            $kittoll->amountreadline = $request->txtAmountReadline;
             $kittoll->impacto = $request->checkImpacto;
+            $kittoll->amountimpacto = $request->txtAmountImpacto;
             $kittoll->dielectricos = $request->checkDielectricos;
+            $kittoll->amountdielectricos = $request->txtAmountDielectricos;
             $kittoll->corte = $request->checkCorte;
+            $kittoll->amountcorte = $request->txtAmountCorte;
             $kittoll->fuerza = $request->checkFuerza;
+            $kittoll->amountfuerza = $request->txtAmountFuerza;
             $kittoll->recto = $request->checkRecto;
+            $kittoll->amountrecto = $request->txtAmountRecto;
             $kittoll->francesas = $request->checkFrancesas;
+            $kittoll->amountfrancesas = $request->txtAmountFrancesas;
             $kittoll->sierra = $request->checkSierra;
+            $kittoll->amountsierra = $request->txtAmountSierra;
             $kittoll->silicona = $request->checkSilicona;
+            $kittoll->amountsilicona = $request->txtAmountSilicona;
             $kittoll->polea = $request->checkPolea;
+            $kittoll->amountpolea = $request->txtAmountPolea;
             $kittoll->wincha = $request->checkWincha;
+            $kittoll->amountwincha = $request->txtAmountWincha;
             $kittoll->eslinga = $request->checkEslinga;
+            $kittoll->amounteslinga = $request->txtAmountEslinga;
             $kittoll->brocas = $request->checkBrocas;
+            $kittoll->amountbrocas = $request->txtAmountBrocas;
             $kittoll->sacabocado = $request->checkSacabocado;
+            $kittoll->amountsacabocado = $request->txtAmountSacabocado;
             $kittoll->extractor = $request->checkExtractor;
+            $kittoll->amountextractor = $request->txtAmountExtractor;
+            $kittoll->juegollaves = $request->checkJuegoLlaves;
+            $kittoll->amountjuegollaves = $request->txtAmountJuegoLlaves;
+            $kittoll->cuter = $request->checkCuter;
+            $kittoll->amountcuter = $request->txtAmountCuter;
+            $kittoll->thor = $request->checkThor;
+            $kittoll->amountthor = $request->txtAmountThor;
             $kittoll->maletagrande = $request->checkMaletaGrande;
+            $kittoll->amountmaletagrande = $request->txtAmountMaletaGrande;
             $kittoll->maletamediana = $request->checkMaletaMediana;
+            $kittoll->amountmaletamediana = $request->txtAmountMaletaMediana;
             $kittoll->save();
             return response()->json([
                 'response'=>1
@@ -553,19 +610,23 @@ class ApiController extends Controller
         ]);
     }
 
-    public function checkControlTools(Request $request){
+    public function checkControlEpp(Request $request){
         $v = $this->validar($request->usuario_id,$request->token);
         if ($v){
-            $controltoll = new Controltool();
-            $controltoll->control_gastos = $request->control_gastos;
-            $controltoll->cuadrilla = $request->cuadrilla;
-            $controltoll->fecha_insercion = $request->fecha_insercion;
-            $controltoll->usuario_id = $request->usuario_id;
-            $controltoll->juegollaves = $request->checkJuegoLlaves;
-            $controltoll->juegodados = $request->checkJuegoDados;
-            $controltoll->cuter = $request->checkCuter;
-            $controltoll->arnes = $request->checkArnes;
-            $controltoll->save();
+            $controlepp = new Controlepp();
+            $controlepp->control_gastos = $request->control_gastos;
+            $controlepp->cuadrilla = $request->cuadrilla;
+            $controlepp->fecha_insercion = $request->fecha_insercion;
+            $controlepp->usuario_id = $request->usuario_id;
+            $controlepp->carroanticaidas = $request->checkcarroanticaidas;
+            $controlepp->amountcarroanticaidas = $request->txtCarroAnticaidas;
+            $controlepp->lineavida = $request->checklineavida;
+            $controlepp->amountlineavida = $request->txtLineaVida;
+            $controlepp->lineaposicionamiento = $request->checklineaposicionamiennto;
+            $controlepp->amountlineaposicionamiento = $request->txtPosicionamiento;
+            $controlepp->arnes = $request->checkArnes;
+            $controlepp->amountarnes = $request->txtArnes;
+            $controlepp->save();
             return response()->json([
                 'response'=>1
                 ]

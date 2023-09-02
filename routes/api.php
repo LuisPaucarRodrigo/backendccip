@@ -38,4 +38,4 @@ Route::post('/checkStateCarEquipment',[\App\Http\Controllers\ApiController::clas
 Route::post('/checkStateCar',[\App\Http\Controllers\ApiController::class,'checkStateCar']);
 Route::post('/checkControlEquipmentTools',[\App\Http\Controllers\ApiController::class,'checkControlEquipmentTools']);
 Route::post('/checkControlKitTools',[\App\Http\Controllers\ApiController::class,'checkControlKitTools']);
-Route::post('/checkControlTools',[\App\Http\Controllers\ApiController::class,'checkControlTools']);
+Route::post('/checkControlEpp',[\App\Http\Controllers\ApiController::class,'checkControlEpp']);

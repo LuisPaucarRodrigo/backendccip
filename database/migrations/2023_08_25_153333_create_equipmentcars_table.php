@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('control_gastos');
             $table->string('cuadrilla');
             $table->dateTime('fecha_insercion');
+            $table->string('placa');
             $table->string('extintor');
             $table->string('botiquin');
             $table->string('conos');

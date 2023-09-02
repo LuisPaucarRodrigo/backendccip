@@ -10,6 +10,7 @@
             <th>Control de Gastos</th>
             <th>Cuadrilla</th>
             <th>Fecha de Inserción</th>
+            <th>Placa</th>
             <th>Extintor</th>
             <th>Botiquín</th>
             <th>Conos</th>
@@ -37,6 +38,7 @@
             <td>{{ $equipcar->control_gastos }}</td> 
             <td>{{ $equipcar->cuadrilla }}</td>     
             <td>{{ $equipcar->fecha_insercion }}</td>
+            <td>{{ $equipcar->placa }}</td>
             <td>{{ $equipcar->extintor }}</td>
             <td>{{ $equipcar->botiquin }}</td>
             <td>{{ $equipcar->conos }}</td>

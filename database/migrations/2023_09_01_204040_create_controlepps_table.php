@@ -13,15 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cardocs', function (Blueprint $table) {
+        Schema::create('controlepps', function (Blueprint $table) {
             $table->id();
             $table->string('control_gastos');
             $table->string('cuadrilla');
             $table->dateTime('fecha_insercion');
-            $table->string('placa');
-            $table->string('circulacion');
-            $table->string('tecnica');
-            $table->string('soat');
+            $table->string('carroanticaidas');
+            $table->string('amountcarroanticaidas');
+            $table->string('lineavida');
+            $table->string('amountlineavida');
+            $table->string('lineaposicionamiento');
+            $table->string('amountlineaposicionamiento');
+            $table->string('arnes');
+            $table->string('amountarnes');
             $table->foreignId('usuario_id')->references('id')->on('usuario_c_c_i_p_s');
             $table->timestamps();
         });
@@ -34,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cardocs');
+        Schema::dropIfExists('controlepps');
     }
 };
