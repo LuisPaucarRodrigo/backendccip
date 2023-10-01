@@ -25,16 +25,17 @@ class CombustibleExport implements FromView,WithColumnWidths
         return [
             'A' => 5,
             'B' => 9,
-            'C' => 11,
-            'D' => 15,
+            'C' => 17,
+            'D' => 11,
             'E' => 15,
-            'F' => 20,
-            'G' => 15,
+            'F' => 15,
+            'G' => 20,
             'H' => 15,
-            'I' => 50,
+            'I' => 15,
             'J' => 50,
-            'K' => 20,
-            'L' => 15,
+            'K' => 50,
+            'L' => 20,
+            'M' => 15,
         ];
     }
 }

@@ -22,8 +22,9 @@
             <div class="mb-3">
                 <label for="rol" class="form-label">Rol</label>
                 <select class="form-select" id="rol" name="rol">
-                    <option value="Admin">Admin</option>
-                    <option value="Asistente">Asistente</option>
+                    @foreach ($roles as $role)
+                        <option value="{{ $role->name }}">{{ $role->name }}</option>
+                    @endforeach
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Actualizar Usuario</button>

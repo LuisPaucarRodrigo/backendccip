@@ -25,12 +25,23 @@ class LoginController extends Controller
         return $this->authenticated($request, $user);
     }
     public function authenticated(Request $request, $user){
-        if ($user->rol == 'Asistente') {
-            return redirect('/home/reportes');
-        } else {
-            return redirect('/home/general');
+        if ($user->hasPermissionTo('admin.general')) {
+            return redirect('/home/general'); // Redirigir si el usuario tiene el permiso 'admin.general'
+        } elseif ($user->hasPermissionTo('admin.tareas')) {
+            return redirect('/home/tareas'); // Redirigir si el usuario tiene el permiso 'asistente.general'
+        } elseif ($user->hasPermissionTo('admin.listado')) {
+            return redirect('/home/roleslist'); // Redirigir si el usuario tiene el permiso 'asistente.general'
+        }elseif ($user->hasPermissionTo('admin.usuarios')) {
+            return redirect('/home'); // Redirigir si el usuario tiene el permiso 'asistente.general'
+        }elseif ($user->hasPermissionTo('admin.reportes')) {
+            return redirect('/home/generate'); // Redirigir si el usuario tiene el permiso 'asistente.general'
+        }elseif ($user->hasPermissionTo('admin.gastosfijos')) {
+            return redirect('/gastosfijos/camioneta'); // Redirigir si el usuario tiene el permiso 'asistente.general'
+        }elseif ($user->hasPermissionTo('admin.rrhh')) {
+            return redirect('/rrhh/personal'); // Redirigir si el usuario tiene el permiso 'asistente.general'
+        }else {
+            return redirect('/home/plantainterna'); // Redirigir a una ruta predeterminada si no tiene los permisos anteriores
         }
-        //return redirect('/home/general');
     }
     public function logout(){
         Auth::logout();

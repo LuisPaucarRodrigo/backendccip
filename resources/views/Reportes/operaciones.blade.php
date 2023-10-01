@@ -1,5 +1,5 @@
 @php
-    $x = 1;
+$x = 1;
 @endphp
 <table>
     <thead>
@@ -21,7 +21,7 @@
         </tr>
     </thead>
     <tbody>
-    @foreach($operaciones as $operaciones)
+        @foreach($operaciones as $operaciones)
         <tr>
             <td></td>
             <td>{{ $x++ }}</td>
@@ -30,16 +30,16 @@
             <td>{{ $operaciones->tipo_documento }}</td>
             <td>{{ $operaciones->nro_documento }}</td>
             <td>{{ $operaciones->fecha_documento }}</td>
-            <td>{{abs($operaciones->gasto)/1.18}}</td>
-            <td>{{abs($operaciones->gasto)-(abs($operaciones->gasto)/1.18)}}</td>
-            <td>{{abs($operaciones->gasto)}}</td>
+            <td>{{ number_format(abs($operaciones->gasto) / 1.18, 2) }}</td>
+            <td>{{ number_format(abs($operaciones->gasto) - (abs($operaciones->gasto) / 1.18), 2) }}</td>
+            <td>{{ number_format(abs($operaciones->monto_total), 2) }}</td>
             <td>{{ $operaciones->fecha_insercion }}</td>
             <td>{{ $operaciones->UsuarioCCIP->name }}</td>
             <td>{{ $operaciones->concepto }}</td>
         </tr>
         @php
-            $x = $x+1;
+        $x = $x+1;
         @endphp
-    @endforeach
+        @endforeach
     </tbody>
 </table>

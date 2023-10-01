@@ -15,8 +15,13 @@ return new class extends Migration
     {
         Schema::create('tareas', function (Blueprint $table) {
             $table->id();
+            $table->string('zona');
+            $table->string('site');
             $table->string('titulo');
-            $table->string('mensaje',1000);
+            $table->text('operaciones');
+            $table->string('descripcion',1000);
+            $table->string('observaciones', 1000)->nullable()->default(null);
+            $table->string('crqincidencias', 20)->nullable()->default(null);
             $table->date('fechaCreacion');
             $table->date('fechaVencimiento');
             $table->string('state')->default('Iniciar');

@@ -26,11 +26,16 @@ class TareaExport implements FromView,WithColumnWidths
             'A' => 5,
             'B' => 10,
             'C' => 15,
-            'D' => 18,
+            'D' => 15,
             'E' => 18,
-            'F' => 18,
-            'G' => 13,
-            'h' => 15,
+            'F' => 25,
+            'G' => 25,
+            'H' => 20,
+            'I' => 25,
+            'J' => 20,
+            'K' => 20,
+            'L' => 15,
+            'M' => 15,
         ];
     }
 }

@@ -29,15 +29,16 @@ class PeajeExport implements FromView,WithColumnWidths,WithStyles
         return [
             'A' => 5,
             'B' => 10,
-            'C' => 10,
-            'D' => 15,
-            'E' => 17,
-            'F' => 20,
-            'G' => 35,
-            'H' => 17,
-            'I' => 14,
-            'J' => 20,
-            'K' => 15,
+            'C' => 17,
+            'D' => 10,
+            'E' => 15,
+            'F' => 17,
+            'G' => 20,
+            'H' => 35,
+            'I' => 17,
+            'J' => 14,
+            'K' => 20,
+            'L' => 15,
         ];
     }
     public function styles(Worksheet $sheet)

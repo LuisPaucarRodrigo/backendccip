@@ -7,11 +7,13 @@
         <tr>
             <th></th>
             <th>N°</th>
+            <th>Control de Gastos</th>
             <th>Cuadrilla</th>
             <th>Ruc</th>
             <th>Nro Factura</th>
             <th>Fecha Factura</th>
             <th>Monto Total</th>
+            <th>Galones</th>
             <th>Estacion</th>
             <th>Foto Factura</th>
             <th>Foto Galonera</th>
@@ -24,11 +26,13 @@
         <tr>
             <td></td>
             <td>{{ $x++ }}</td>
+            <td>{{ $cgep->control_gastos }}</td>  
             <td>{{ $cgep->cuadrilla }}</td>     
             <td>{{ $cgep->ruc }}</td>      
             <td>{{ $cgep->nro_factura }}</td>
-            <td>{{ $cgep->fecha_factura }}</td>
+            <td>{{ $cgep->fecha_documento }}</td>
             <td>{{ $cgep->monto_total}}</td>
+            <td>{{ $cgep->galones}}</td>
             <td>{{ $cgep->estacion}}</td>
             <td>{{ $cgep->foto_factura}}</td>
             <td>{{ $cgep->foto_galonera}}</td>

@@ -7,6 +7,7 @@
     <tr>
         <th></th>
         <th>N°</th>
+        <th>Control de Gastos</th>
         <th>Cuadrilla</th>
         <th>Ruc</th>
         <th>Tipo de Doc</th>
@@ -25,6 +26,7 @@
         <tr>
             <td></td>
             <td>{{ $x++ }}</td>
+            <td>{{ $otros->control_gastos }}</td> 
             <td>{{ $otros->cuadrilla }}</td>
             <td>{{ $otros->ruc }}</td>
             <td>{{ $otros->tipo_documento }}</td>

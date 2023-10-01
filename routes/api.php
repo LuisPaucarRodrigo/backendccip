@@ -27,6 +27,7 @@ Route::post('/peaje',[\App\Http\Controllers\ApiController::class,'peaje']);
 Route::post('/otros',[\App\Http\Controllers\ApiController::class,'otros']);
 
 Route::get('/notificaciones',[\App\Http\Controllers\ApiController::class,'notification']);
+Route::post('/notificacionestask',[\App\Http\Controllers\ApiController::class,'notificationtask']);
 
 Route::post('/task',[\App\Http\Controllers\ApiController::class,'task']);
 

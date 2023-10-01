@@ -15,23 +15,19 @@
 <form id="formAnual" method="post" action="/home/general/config">
   @csrf
   <div class="row">
-
     <div class="col-lg-4 col-md-6 col-12">
       <!-- Tarjeta de Gastos Total Mensual -->
       <div class="card">
         <div class="card-body">
-          {{-- <form id="formAnual" method="post" action="/home/general/config">
-            @csrf --}}
             <input type="hidden" name="updateType" value="anual">
             <div class="d-flex justify-content-between align-items-center">
                 <h3 class="card-title">
                     Gastos Anual</h3>
                 <div class="input-group" style="max-width: 100px;">
-                    <input type="number" id="yearSpinnerAnual" class="form-control" min="1900" max="2099" step="1" name="year" value="{{ $year }}">
+                    <input type="number" id="yearAnual" class="form-control" min="1900" max="2099" step="1" name="year" value="{{ $year }}">
                 </div>
             </div>
-          {{-- </form> --}}
-          <div class="display-4 mt-4">S/{{ $gastosPorAnual }}</div> <!-- Monto del gasto total mensual -->
+          <div id="gastosTotalesAnuales" class="display-4 mt-4">S/{{ $gastosPorAnual }}</div> <!-- Monto del gasto total mensual -->
         </div>
       </div>
     </div>
@@ -40,31 +36,27 @@
       <!-- Tarjeta de Gastos Acumulados -->
       <div class="card">
         <div class="card-body">
-          {{-- <form id="formMensual" method="post" action="/home/general/config">
-            @csrf --}}
-            <input type="hidden" name="updateType" value="mensual">
-            <div class="d-flex justify-content-between align-items-center">
-              <h3 class="card-title">Gastos Mensual</h3>
-              {{-- <i class="fas fa-dollar-sign fa-2x"></i> <!-- Icono de gráfico de barras --> --}}
-              <div class="input-group" style="max-width: 128px;">
-                <select id="monthSelect" class="form-control" name="month">
-                  <option value="1" {{ $month === '1' ? 'selected' : '' }}>Enero</option>
-                  <option value="2" {{ $month === '2' ? 'selected' : '' }}>Febrero</option>
-                  <option value="3" {{ $month === '3' ? 'selected' : '' }}>Marzo</option>
-                  <option value="4" {{ $month === '4' ? 'selected' : '' }}>Abril</option>
-                  <option value="5" {{ $month === '5' ? 'selected' : '' }}>Mayo</option>
-                  <option value="6" {{ $month === '6' ? 'selected' : '' }}>Junio</option>
-                  <option value="7" {{ $month === '7' ? 'selected' : '' }}>Julio</option>
-                  <option value="8" {{ $month === '8' ? 'selected' : '' }}>Agosto</option>
-                  <option value="9" {{ $month === '9' ? 'selected' : '' }}>Septiembre</option>
-                  <option value="10" {{ $month === '10' ? 'selected' : '' }}>Octubre</option>
-                  <option value="11" {{ $month === '11' ? 'selected' : '' }}>Noviembre</option>
-                  <option value="12" {{ $month === '12' ? 'selected' : '' }}>Diciembre</option>
-                </select>
-              </div>  
-            </div>
-          {{-- </form> --}}
-          <div class="display-4 mt-4">S/{{ $gastosPorMes }}</div> <!-- Monto del gasto acumulado -->
+          <input type="hidden" name="updateType" value="mensual">
+          <div class="d-flex justify-content-between align-items-center">
+            <h3 class="card-title">Gastos Mensual</h3>
+            <div class="input-group" style="max-width: 128px;">
+              <select id="monthSelect" class="form-control" name="month">
+                <option value="1" {{ $month2 === '1' ? 'selected' : '' }}>Enero</option>
+                <option value="2" {{ $month2 === '2' ? 'selected' : '' }}>Febrero</option>
+                <option value="3" {{ $month2 === '3' ? 'selected' : '' }}>Marzo</option>
+                <option value="4" {{ $month2 === '4' ? 'selected' : '' }}>Abril</option>
+                <option value="5" {{ $month2 === '5' ? 'selected' : '' }}>Mayo</option>
+                <option value="6" {{ $month2 === '6' ? 'selected' : '' }}>Junio</option>
+                <option value="7" {{ $month2 === '7' ? 'selected' : '' }}>Julio</option>
+                <option value="8" {{ $month2 === '8' ? 'selected' : '' }}>Agosto</option>
+                <option value="9" {{ $month2 === '9' ? 'selected' : '' }}>Septiembre</option>
+                <option value="10" {{ $month2 === '10' ? 'selected' : '' }}>Octubre</option>
+                <option value="11" {{ $month2 === '11' ? 'selected' : '' }}>Noviembre</option>
+                <option value="12" {{ $month2 === '12' ? 'selected' : '' }}>Diciembre</option>
+              </select>
+            </div>  
+          </div>
+          <div id="gastosTotalesMensual" class="display-4 mt-4">S/{{ $gastosPorMes }}</div> <!-- Monto del gasto acumulado -->
         </div>
       </div>
     </div>
@@ -73,11 +65,20 @@
       <!-- Usuarios registrados CCIP -->
       <div class="card">
         <div class="card-body">
+        <input type="hidden" name="updateType" value="mensual">
           <div class="d-flex justify-content-between align-items-center">
-            <h3 class="card-title">Usuarios CCIP</h3>
-            <i class="fas fa-user fa-2x"></i> <!-- Icono de gráfico de barras -->
+            <h3 class="card-title">Gastos Mensual por zona</h3>
+            <div class="input-group" style="max-width: 128px;">
+              <select id="zonaSelect" class="form-control" name="zona">
+                <option value="Arequipa" {{ $zona === 'Arequipa' ? 'selected' : '' }}>Arequipa</option>
+                <option value="Chala" {{ $zona === 'Chala' ? 'selected' : '' }}>Chala</option>
+                <option value="Moquegua" {{ $zona === 'Moquegua' ? 'selected' : '' }}>Moquegua</option>
+                <option value="MDD1" {{ $zona === 'MDD1' ? 'selected' : '' }}>MDD1</option>
+                <option value="MDD2" {{ $zona === 'MDD2' ? 'selected' : '' }}>MDD2</option>
+              </select>
+            </div>  
           </div>
-          <div class="display-4 mt-4">{{ $countuser }}</div> <!-- Monto del gasto acumulado -->
+          <div id="gastosTotalesMensualCuadrilla" class="display-4 mt-4">S/{{ $gastosPorCuadrilla }}</div> <!-- Monto del gasto acumulado -->
         </div>
       </div>
     </div>
@@ -87,133 +88,223 @@
     <div class="col-md-6">
       <div class="card">
         <div class="card-body">
-          <h3 class="card-title">Gastos</h3>
+          <input type="hidden" name="updateType" value="usuario">
+            <div class="d-flex justify-content-between align-items-center">
+              <h3 class="card-title">Gastos</h3>
+              <div class="input-group" style="max-width: 128px;">
+                <select id="ConceptSelect" class="form-control" name="concepto">
+                    <option value="Combustible" {{ $concept == 'Combustible' ? 'selected' : '' }}>Combustible</option>
+                    <option value="CombustibleGep" {{ $concept == 'CombustibleGep' ? 'selected' : '' }}>Cgep</option>
+                    <option value="Peaje" {{ $concept == 'Peaje' ? 'selected' : '' }}>Peaje</option>
+                    <option value="Otros" {{ $concept == 'Otros' ? 'selected' : '' }}>Otros</option>
+                </select>
+              </div>  
+            </div>
           <canvas id="gastosChart"></canvas>
         </div>
       </div>
     </div>
-
     <div class="col-md-6">
       <div class="card">
         <div class="card-body">
-          {{-- <form id="formMensualUsuario" method="post" action="/home/general/config">
-            @csrf --}}
-            <input type="hidden" name="updateType" value="usuario">
+          <input type="hidden" name="updateType" value="usuario">
             <div class="d-flex justify-content-between align-items-center">
               <h3 class="card-title">Gastos Usuario</h3>
-              {{-- <i class="fas fa-dollar-sign fa-2x"></i> <!-- Icono de gráfico de barras --> --}}
               <div class="input-group" style="max-width: 128px;">
                 <select id="UserSelect" class="form-control" name="usuario">
                   @foreach($users as $user)
-                  {{-- <option value="1" {{ $month === '1' ? 'selected' : '' }}>Enero</option> --}}
                   <option value="{{ $user->id }}" {{ $user->id == $usuario ? 'selected' : ($loop->first ? 'selected' : '') }}>{{ $user->name }}</option>
                   @endforeach
                 </select>
               </div>  
             </div>
             <canvas id="gastosChartUsuario"></canvas>
-          {{-- </form> --}}
         </div>
       </div>
-    </div>
+    </div> 
   </div>
 </form>
 @stop
 
 @section('css')
-    
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
 @stop
 
 @section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 <script>
-  var ctx = document.getElementById('gastosChart').getContext('2d');
-  var gastosChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Combustible', 'Peaje', 'Otros', 'Combustible GEP'],
-      datasets: [{
-        label: 'Operaciones',
-        data: [
-        @foreach($gastosPorCampo as $campo => $gasto)
-        {{ $gasto }},
-        @endforeach
-        ],// Reemplaza estos valores con tus datos de gastos
-        backgroundColor: ['#007bff', '#28a745', '#ffc107', '#dc3545'],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
+  var ctxchart = document.getElementById('gastosChart').getContext('2d');
+  var gastosChart = new Chart(ctxchart, {
+      type: 'bar',
+      data: {
+          labels: [
+              'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+              'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+          ],
+          datasets: [{
+              label: 'Operaciones',
+              data: [
+                  @foreach($gastosPorCampo as $mes => $gasto)
+                      {{ $gasto }},
+                  @endforeach
+              ],
+              backgroundColor: ['#007bff', '#28a745', '#ffc107', '#dc3545'],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }]
           }
-        }]
       }
-    }
   });
+
 </script>
-
 <script>
-  var ctx = document.getElementById('gastosChartUsuario').getContext('2d');
-  var gastosChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Combustible', 'Peaje', 'Otros', 'Combustible GEP'],
-      datasets: [{
-        label: 'Operaciones',
-        data: [
-        @foreach($gastosPorCampoUsuario as $campo => $gasto)
-        {{ $gasto }},
-        @endforeach
-        ],// Reemplaza estos valores con tus datos de gastos
-        backgroundColor: ['#007bff', '#28a745', '#ffc107', '#dc3545'],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
-          }
-        }]
-      }
-    }
-  });
-</script>
+    var ctxchartjs = document.getElementById('gastosChart').getContext('2d');
+    var gastosChart;
+    var csrfToken = '{{ csrf_token() }}';
 
-<script>
-  // Obtener los elementos de formulario y agregar un listener para el evento "change"
-  const formAnual = document.getElementById('formAnual');
-  const yearSpinnerAnual = document.getElementById('yearSpinnerAnual');
-  const monthSelect = document.getElementById('monthSelect');
-  const UserSelect = document.getElementById('UserSelect');
-  
-  yearSpinnerAnual.addEventListener('change', () => {
-      formAnual.submit(); // Enviar automáticamente el formulario cuando cambie el año
-  });
+    $('#ConceptSelect,#zonaSelect,#yearAnual,#monthSelect').on('change', function() {
+      var conceptoSeleccionado = $('#ConceptSelect').val();
+      var zonaSeleccionada = $('#zonaSelect').val();
+      var monthselect = $('#monthSelect').val();
+      var yearAnual = $('#yearAnual').val();
+        $.ajax({
+            type: 'POST',
+            url: '/home/general/actualizar',
+            data: {
+                concepto: conceptoSeleccionado,
+                zona:zonaSeleccionada,
+                month:monthselect,
+                year:yearAnual,
+                _token: csrfToken 
+            },
+            success: function(data) {
+                if (gastosChart) {
+                  gastosChart.destroy();
+                }
+                $('#gastosTotalesAnuales').html('S/' + data.gastosPorAnual);
+                $('#gastosTotalesMensual').html('S/' + data.gastosPorMes);
+                $('#gastosTotalesMensualCuadrilla').html('S/' + data.gastosPorCuadrilla);
+                
 
-  // const formMensual = document.getElementById('formMensual');
-  // const monthSelect = document.getElementById('monthSelect');
-  monthSelect.addEventListener('change', () => {
-    formAnual.submit(); // Enviar automáticamente el formulario cuando cambie el mes
-  });
-
-  // const formMensualUsuario = document.getElementById('formMensualUsuario');
-  // const UserSelect = document.getElementById('UserSelect');
-  UserSelect.addEventListener('change', () => {
-    formAnual.submit(); // Enviar automáticamente el formulario cuando cambie el mes
-  });
-</script>
-
-{{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#example').DataTable();
+                gastosChart = new Chart(ctxchartjs, {
+                    type: 'bar',
+                    data: {
+                        labels: [
+                            'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+                        ],
+                        datasets: [{
+                            label: 'Operaciones',
+                            data: Object.values(data.gastosPorCampojs),
+                            backgroundColor: ['#007bff', '#28a745', '#ffc107', '#dc3545'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            },
+            error: function() {
+                // Manejo de errores si es necesario
+            }
+        });
     });
-</script> --}}
+</script>
+
+<script>
+  var ctxusers= document.getElementById('gastosChartUsuario').getContext('2d');
+  var gastosChartusers = new Chart(ctxusers, {
+    type: 'bar',
+    data: {
+      labels: ['Combustible', 'Peaje', 'Otros', 'Combustible GEP'],
+      datasets: [{
+        label: 'Operaciones',
+        data: [
+        @foreach($gastosPorCampoUsuario as $campo => $gastousers)
+        {{ $gastousers }},
+        @endforeach
+        ],// Reemplaza estos valores con tus datos de gastos
+        backgroundColor: ['#007bff', '#28a745', '#ffc107', '#dc3545'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+</script>
+
+<script>
+    var ctxusersjs = document.getElementById('gastosChartUsuario').getContext('2d');
+    var gastosChartusers;
+    var csrfToken = '{{ csrf_token() }}';
+
+    $('#UserSelect,#zonaSelect,#yearAnual,#monthSelect').on('change', function() {
+        var conceptoSeleccionadousers = $('#UserSelect').val();
+        var zonaSeleccionadausers = $('#zonaSelect').val();
+        var monthSelectusers = $('#monthSelect').val();
+        var yearAnualusers = $('#yearAnual').val();
+        $.ajax({
+            type: 'POST',
+            url: '/home/general/actualizar/users',
+            data: {
+                usuario: conceptoSeleccionadousers,
+                zona:zonaSeleccionadausers,
+                month:monthSelectusers,
+                year:yearAnualusers,
+                _token: csrfToken 
+            },
+            success: function(datausers) {
+                if (gastosChartusers) {
+                  gastosChartusers.destroy();
+                }
+                gastosChartusers = new Chart(ctxusersjs, {
+                    type: 'bar',
+                    data: {
+                      labels: ['Combustible', 'Peaje', 'Otros', 'Combustible GEP'],
+                        datasets: [{
+                            label: 'Gastos Usuario',
+                            data: Object.values(datausers),
+                            backgroundColor: ['#007bff', '#28a745', '#ffc107', '#dc3545'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            },
+            error: function() {
+                // Manejo de errores si es necesario
+            }
+        });
+    });
+</script>
 @stop

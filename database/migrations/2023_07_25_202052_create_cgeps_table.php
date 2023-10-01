@@ -20,8 +20,9 @@ return new class extends Migration
             $table->dateTime('fecha_insercion');
             $table->string("ruc"); 
             $table->string('nro_factura');
-            $table->date('fecha_factura');
+            $table->date('fecha_documento');
             $table->double('monto_total');
+            $table->string('galones');
             $table->string('estacion');
             $table->string('foto_factura');
             $table->string('foto_galonera');

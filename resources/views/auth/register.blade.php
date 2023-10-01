@@ -38,8 +38,9 @@
                         <div class="mb-3">
                             <label for="role" class="form-label">Rol</label>
                             <select name="role" class="form-select">
-                                <option value="Admin">Admin</option>
-                                <option value="Asistente">Asistente</option>
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                @endforeach
                             </select>
                         </div>
 

@@ -304,11 +304,62 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
-        // [
-        //     'text' => 'blog',
-        //     'url'  => 'admin/blog',
-        //     'can'  => 'manage-blog',
-        // ],
+        ['header' => 'Roles',
+        'can' => 'admin.listado'],
+        [
+            'text'        => 'Listado de Roles',
+            'url'         => '/home/roleslist',
+            'icon' =>'fas fa-fw fa-chart-bar',
+            'label_color' => 'success',
+            'can' => 'admin.listado'
+        ],
+        [
+            'text'        => 'Gastos Fijos',
+            'icon' =>'fas fa-money-check-alt',
+            'can' => 'admin.gastosfijos',
+            'submenu' => [
+                [
+                    'text'        => 'Camionetas',
+                    'url'         => '/gastosfijos/camioneta',
+                    'can' => 'admin.camioneta',
+                    'icon' =>'fas fa-truck',
+                    'label_color' => 'success',
+                ],[
+                    'text'        => 'Habitaciones',
+                    'url'         => '/gastosfijos/habitaciones',
+                    'can' => 'admin.habitaciones',
+                    'icon' =>'fas fa-bed',
+                    'label_color' => 'success',
+                ],[
+                    'text'        => 'Terceros',
+                    'url'         => '/gastosfijos/terceros',
+                    'can' => 'admin.terceros',
+                    'icon' =>'fas fa-users',
+                    'label_color' => 'success',
+                ]
+            ]
+
+        ],
+        [
+            'text'        => 'RR.HH',
+            'icon' =>'fas fa-users-cog',
+            'can' => 'admin.rrhh',
+            'submenu' => [
+                [
+                    'text'        => 'Planilla',
+                    'url'         => '/rrhh/planilla',
+                    'icon' =>'fas fa-file-invoice-dollar',
+                    'label_color' => 'success',
+                ],[
+                    'text'        => 'Personal',
+                    'url'         => '/rrhh/personal',
+                    'can' => 'admin.personal',
+                    'icon' =>'fas fa-user',
+                    'label_color' => 'success',
+                ]
+            ]
+
+        ],
         ['header' => 'Gerente',
         'can' => 'admin.general'],
         [
@@ -320,7 +371,7 @@ return [
         ],
         [
             'text'        => 'Usuarios',
-            'can' => 'admin.general',
+            'can' => 'admin.usuarios',
             'submenu' => [
                 [
                     'text'        => 'Usuarios Administradores',
@@ -341,17 +392,34 @@ return [
             'url'         => '/home/tareas',
             'icon' => 'fas fa-fw fa-tasks',
             'label_color' => 'success',
-            'can' => 'admin.general',
+            'can' => 'admin.tareas',
         ],
-        ['header' => 'Administracion'],
+        ['header' => 'Administracion',
+        'can' => 'admin.reportes'],
         [
             'text'        => 'Reportes',
             'url'         => '/home/reportes',
             'icon' => 'fas fa-fw fa-file-excel',
             'label_color' => 'success',
-            'can' => 'admin.administracion.reportes'
+            'can' => 'admin.reportes'
+            
         ],
-       
+        ['header' => 'Planta Interna',
+        'can' => 'admin.operaciones',],
+        [
+            'text'        => 'Operaciones',
+            'icon' =>'fas fa-cogs',
+            'can' => 'admin.operaciones',
+            'submenu' => [
+                [
+                    'text'        => 'Control de Gastos',
+                    'url'         => 'home/plantainterna',
+                    'icon' =>'fas fa-fw fa-chart-bar',
+                    'label_color' => 'success',
+                ]
+            ]
+
+        ],
         // [
         //     'text'        => 'Informes',
         //     'url'         => '/home/informes',

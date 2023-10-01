@@ -29,17 +29,18 @@ class OtrosExport implements FromView,WithColumnWidths,WithStyles
         return [
             'A' => 5,
             'B' => 9,
-            'C' => 15,
+            'C' => 17,
             'D' => 15,
             'E' => 15,
             'F' => 15,
-            'G' => 20,
+            'G' => 15,
             'H' => 20,
-            'I' => 35,
+            'I' => 20,
             'J' => 35,
-            'K' => 10,
-            'L' => 20,
-            'M' => 12,
+            'K' => 35,
+            'L' => 10,
+            'M' => 20,
+            'N' => 12,
         ];
     }
     public function styles(Worksheet $sheet)

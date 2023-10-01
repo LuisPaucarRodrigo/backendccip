@@ -38,12 +38,12 @@
                     <div class="col align-self-center">
                         <label class="form-label" >Tabla</label>
                         <select class="form-select" id="tabla" aria-label="Default select example" name="tabla" required>
-                            <option value="0" selected>General</option>
-                            <option value="1">Combustible</option>
+                            <option value="Operaciones" selected>General</option>
+                            <option value="Combustible">Combustible</option>
                             <option value="2">Traslado</option>
-                            <option value="3">Peaje</option>
-                            <option value="4">Otros</option>
-                            <option value="5">Cgep</option>
+                            <option value="Peaje">Peaje</option>
+                            <option value="Otros">Otros</option>
+                            <option value="Cgep">Cgep</option>
                             <option value="6">Recargas</option>
                             <option value="7">Tareas</option>
                             <option value="8">Control Kit Herramientas</option>
@@ -56,13 +56,56 @@
                     </div>
                     <br>
                 </div>
+                <div class="container text-center">
+                    <div class="col align-self-center">
+                        <select class="form-select" id="tabla" aria-label="Default select example" name="usuarios" required>
+                            @foreach($users as $user)
+                                <option value="{{ $user->id }}" {{ $user->id == $usuario ? 'selected' : '' }}>{{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <br>
+                </div>
                 <div class="row">
                     <div class="col">
-                        <a class="btn btn-danger" href="/home">Cancelar</a>
-                        <button class="btn btn-success" id="btn" type="submit">Generar Excel</button>
+                        <button class="btn btn-success" name="submit" value="generar" id="btn" type="submit">Generar Excel</button>
+                        <button class="btn btn-warning" name="submit" value="previsualizacion" type="submit">Previsualizacion</button>
                     </div>
                 </div>
             </form>
+            @if(isset($result)) <!-- Verifica si tienes datos para mostrar -->
+            <div class="mt-5">
+                <h2>Tabla de Gastos</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                        @foreach($columnas as $columnaNombre => $columnaTitulo)
+                            <th>{{ $columnaTitulo }}</th>
+                        @endforeach
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                            $totalMonto = 0; 
+                        @endphp
+                        @foreach($result as $dato)
+                        <tr>
+                            <td>{{ $dato->id }}</td>
+                            <td>{{ $dato->monto_total }}</td>
+                            <td>{{ $dato->fecha_documento }}</td>
+                            <td>{{ $dato->cuadrilla }}</td>
+                            <td>{{ $dato->concepto }}</td>
+                            @php
+                                $totalMonto += $dato->monto_total;
+                            @endphp
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <p>Total: {{ $totalMonto }}</p>
+                <p>Recarga total: {{ $recargatotal->monto_total }}</p>
+            </div>
+            @endif
         </div>
     </div>
 @stop

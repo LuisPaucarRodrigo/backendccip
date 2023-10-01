@@ -56,7 +56,7 @@
             <td>{{ $equipcar->portaescalera }}</td>
             <td>{{ $equipcar->placalateral }}</td>
             <td>{{ $equipcar->UsuarioCCIP->name}}</td>
-        </tr>
+        </tr>   
     @endforeach
     </tbody>
 </table>

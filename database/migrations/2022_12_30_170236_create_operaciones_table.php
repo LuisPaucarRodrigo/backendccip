@@ -22,9 +22,9 @@ return new class extends Migration
             $table->string("ruc"); 
             $table->string("tipo_documento");        
             $table->string("nro_documento");
-            $table->dateTime("fecha_documento");
+            $table->date("fecha_documento");
             $table->string("concepto");
-            $table->double("gasto");
+            $table->double("monto_total");
             $table->timestamps();
         });
     }

@@ -7,6 +7,7 @@
     <tr>
         <th></th>
         <th>N°</th>
+        <th>Control de Gastos</th>
         <th>Cuadrilla</th>
         <th>Ruc</th>
         <th>Nro de factura</th>
@@ -23,10 +24,11 @@
         <tr>
             <td></td>
             <td>{{ $x++ }}</td>
+            <td>{{ $peajes->control_gastos }}</td> 
             <td>{{ $peajes->cuadrilla }}</td>
             <td>{{ $peajes->ruc }}</td>
             <td>{{ $peajes->nro_factura }}</td>
-            <td>{{ $peajes->fecha_factura }} </td>
+            <td>{{ $peajes->fecha_documento }} </td>
             <td>{{ $peajes->foto_factura }}</td>
             <td>{{ $peajes->lugar_llegada }}</td>
             <td>{{ $peajes->monto_total }}</td>

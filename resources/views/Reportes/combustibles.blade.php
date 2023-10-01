@@ -6,6 +6,7 @@
     <tr>
         <th></th>
         <th>N°</th>
+        <th>Control de Gastos</th>
         <th>Cuadrilla</th>
         <th>Ruc</th>
         <th>Nro Factura</th>
@@ -23,10 +24,11 @@
         <tr>
             <td></td>
             <td>{{ $x++ }}</td>
+            <td>{{ $combustible->control_gastos }}</td>  
             <td>{{ $combustible->cuadrilla }}</td>
             <td>{{ $combustible->ruc }}</td>
             <td>{{ $combustible->nro_factura }}</td>
-            <td>{{ $combustible->fecha_factura }}</td>
+            <td>{{ $combustible->fecha_documento }}</td>
             <td>{{ $combustible->monto_total}}</td>
             <td>{{ $combustible->kilometraje}}</td>
             <td>{{ $combustible->foto_km}}</td>

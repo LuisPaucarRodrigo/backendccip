@@ -2,71 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\CgepExport;
-use App\Exports\CombustibleExport;
-use App\Exports\ControlEppExport;
-use App\Exports\OperacionExport;
-use App\Exports\OtrosExport;
-use App\Exports\PeajeExport;
-use App\Exports\TrasladoExport;
-use App\Exports\RecargaExport;
-use App\Exports\TareaExport;
-use App\Exports\KitHerramientasExport;
-use App\Exports\EquipHerramientasExport;
-use App\Exports\ControlHerramientasExport;
-use App\Exports\DocumentosCamionetaExport;
-use App\Exports\EquiposCamionetaExport;
-use App\Exports\EstadoCamionetaExport;
-use App\Exports\EstadoCamiontaExport;
-
-use App\Http\Requests\reporteRequest;
 use Illuminate\Http\Request;
-use App\Models\Cgep;
 use Carbon\Carbon;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Models\UsuarioCCIP as usuarios;
-use App\Models\Combustible;
-use App\Models\Controltool;
-use App\Models\Equipmenttoll;
+use App\Models\UsuarioCCIP;
 use App\Models\Notification;
 use App\Models\Operaciones;
-use App\Models\Tarea;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use \PDF;
 use Illuminate\Support\Facades\Auth;
+use Psy\Readline\Hoa\Console;
 
 class HomeController extends Controller
 {   
-    public function registertask(){
-        $task = new Tarea();
-        $task->usuario_id = request()->input('usuario_id');
-        $task->titulo = request()->input('titulo');
-        $task->fechaCreacion = request()->input('fechaCreacion');
-        $task->fechaVencimiento = request()->input('fechaVencimiento');
-        $task->mensaje = request()->input('descripcion');
-        $task->save();
-        return redirect('home/tareas');
-    }
-
-    public function listtareas(Request $request){
-        $users = usuarios::select('id', 'name')->get();
-        //dd($users);
-        $usuarios = usuarios::select('id')->orderBy('id')->first();
-        $usuario = $usuarios ? $usuarios->id : 0;
-        $tasks = Tarea::where('usuario_id', $usuario)->get();
-        if ($request->isMethod('post')) {
-            $usuario_id = request()->input('usuario_id');
-            $tasks = Tarea::where('usuario_id', $usuario_id)->get();
-            $usuarios = usuarios::find($usuario_id);
-            if ($usuarios) {
-                $usuario = $usuarios->id;
-            }
-            //dd($usuario);
-        }
-        //dd($users);
-        return view('Tareas.listtareas',compact('users', 'tasks','usuario'));
-    }
 
     public function notification(Request $request){
         $notify = new Notification();
@@ -75,15 +23,78 @@ class HomeController extends Controller
         $notify->save();
         return redirect('/home');
     }
-    public function general(Request $request){
-        $countuser = usuarios::all()->count('user');
-        $users = usuarios::select('id', 'name')->get();
-        $usuarios = usuarios::select('id')->orderBy('id')->first();
-        $usuario = $usuarios ? $usuarios->id : 0;
 
+    public function actualizargraficusers(Request $request){
+        $fechaActual = Carbon::now();
+        $gastosPorCampoUsuariojs = [];
+        $usuariomodify = $request->input('usuario');
+        $monthmodify = $request->input('month');
+        $cuadrilla = $request->input('zona');
+        $year = $request->input('year');
+        $fechaInicioMensual = $fechaActual->createFromDate($year, $monthmodify, 1)->format('Y-m-d').' 00:00:00';
+        $fechaFinMensual = $fechaActual->createFromDate($year, $monthmodify)->endOfMonth()->format('Y-m-d').' 23:59:59';
+        foreach (['Combustible', 'Peaje', 'Otros', 'CombustibleGep'] as $concepto) {
+            $gastosPorCampoUsuariojs[$concepto] = Operaciones::where('concepto', $concepto)
+            ->where('usuario_id', $usuariomodify)
+            ->where('cuadrilla', $cuadrilla)
+            ->whereBetween('fecha_insercion', [$fechaInicioMensual, $fechaFinMensual])
+            ->sum('monto_total');
+        }
+
+        return response()->json($gastosPorCampoUsuariojs);  
+    }
+
+    public function actualizar(Request $request){
+        $concept = $request->input('concepto'); 
+        $cuadrilla = $request->input('zona');
+        $monthmodify = $request->input('month');
+        $year = $request->input('year');
+        $gastosPorCampojs = [];
+    
+        for ($month = 1; $month <= 12; $month++) {
+            $fechaInicioMes = Carbon::createFromDate($year, $month, 1)->format('Y-m-d').' 00:00:00';
+            $fechaFinMes = Carbon::createFromDate($year, $month)->endOfMonth()->format('Y-m-d').' 23:59:59';
+    
+            $gastosPorCampojs[$month] = Operaciones::where('concepto', $concept)
+            ->where('cuadrilla', $cuadrilla)
+            ->whereBetween('fecha_insercion', [$fechaInicioMes, $fechaFinMes])
+            ->sum('monto_total');
+        }
+        $fechaInicioAnual = Carbon::createFromDate($year, 1, 1)->format('Y-m-d').' 00:00:00';
+        $fechaFinAnual = Carbon::createFromDate($year,12, 31)->format('Y-m-d').' 23:59:59';
+
+        $fechaInicioMensual = Carbon::createFromDate($year, $monthmodify, 1)->format('Y-m-d').' 00:00:00';
+        $fechaFinMensual = Carbon::createFromDate($year, $monthmodify)->endOfMonth()->format('Y-m-d').' 23:59:59';
+
+        $gastosPorAnual = Operaciones::whereBetween('fecha_insercion', [$fechaInicioAnual, $fechaFinAnual])->sum('monto_total');
+        $gastosPorMes = Operaciones::whereBetween('fecha_insercion', [$fechaInicioMensual, $fechaFinMensual])
+                                    ->sum('monto_total');
+
+        $gastosPorCuadrilla = Operaciones::whereBetween('fecha_insercion', [$fechaInicioMensual, $fechaFinMensual])
+                                    ->where('cuadrilla', $cuadrilla)
+                                    ->sum('monto_total');
+
+        $response = [
+            'gastosPorCuadrilla' => $gastosPorCuadrilla,
+            'gastosPorCampojs' => $gastosPorCampojs,
+            'gastosPorAnual' => $gastosPorAnual,
+            'gastosPorMes' => $gastosPorMes,
+        ];
+        return response()->json($response);
+    }
+    
+
+    public function general(Request $request){
+        $countuser = UsuarioCCIP::all()->count('user');
+        $users = UsuarioCCIP::select('id', 'name')->get();
+        $usuarios = UsuarioCCIP::select('id')->orderBy('id')->first();
+        $usuario = $usuarios ? $usuarios->id : 0;
         $fechaActual = Carbon::now();
         $year = $fechaActual->year;
         $month = strval($fechaActual->month);
+        $month2 = strval($fechaActual->month);
+        $concept = "Combustible";
+        $zona = "Arequipa";
         $fechaInicioAnual = Carbon::createFromDate($year, 1, 1)->format('Y-m-d').' 00:00:00';
         $fechaFinAnual = Carbon::createFromDate($year,12, 31)->format('Y-m-d').' 23:59:59';
 
@@ -96,124 +107,77 @@ class HomeController extends Controller
         foreach (['Combustible', 'Peaje', 'Otros', 'CombustibleGep'] as $concepto) {
             $gastosPorCampoUsuario[$concepto] = Operaciones::where('concepto', $concepto)
                 ->where('usuario_id', $usuario)
+                ->where('cuadrilla', $zona)
                 ->whereBetween('fecha_insercion', [$fechaInicioMensual, $fechaFinMensual])
-                ->sum('gasto');
+                ->sum('monto_total');
+        }
+
+        $gastosPorCampo = [];
+        for ($month = 1; $month <= 12; $month++) {
+            $fechaInicioMes = Carbon::createFromDate($year, $month, 1)->format('Y-m-d').' 00:00:00';
+            $fechaFinMes = Carbon::createFromDate($year, $month)->endOfMonth()->format('Y-m-d').' 23:59:59';
+
+            $gastosPorCampo[$month] = Operaciones::where('concepto', $concept)
+            ->where('cuadrilla', $zona)
+            ->whereBetween('fecha_insercion', [$fechaInicioMes, $fechaFinMes])
+            ->sum('monto_total');
         }
 
         if ($request->isMethod('post')) {
-            
+            $concept = $request->input('concepto');
             $yearmodify = $request->input('year');
+            $monthmodify = $request->input('month');
+            $zona = $request->input('zona');
+            $usuariomodify = $request->input('usuario');
+
+            for ($month = 1; $month <= 12; $month++) {
+                $fechaInicioMes = Carbon::createFromDate($yearmodify, $month, 1)->format('Y-m-d').' 00:00:00';
+                $fechaFinMes = Carbon::createFromDate($yearmodify, $month)->endOfMonth()->format('Y-m-d').' 23:59:59';
+    
+                $gastosPorCampo[$month] = Operaciones::where('concepto', $concept)
+                ->where('cuadrilla', $zona)
+                ->whereBetween('fecha_insercion', [$fechaInicioMes, $fechaFinMes])
+                ->sum('monto_total');
+            }
+            
             $fechaInicioAnual = Carbon::createFromDate($yearmodify, 1, 1)->format('Y-m-d').' 00:00:00';
             $fechaFinAnual = Carbon::createFromDate($yearmodify,12, 31)->format('Y-m-d').' 23:59:59';
             $year = $yearmodify;
 
-            $monthmodify = $request->input('month');
-            $fechaInicioMensual = Carbon::createFromDate(date('Y'), $monthmodify, 1)->format('Y-m-d').' 00:00:00';
+            $fechaInicioMensual = Carbon::createFromDate($yearmodify, $monthmodify, 1)->format('Y-m-d').' 00:00:00';
             $fechaFinMensual = Carbon::createFromDate(date('Y'), $monthmodify)->endOfMonth()->format('Y-m-d').' 23:59:59';
-            $month = $monthmodify;
-
-            $usuariomodify = $request->input('usuario');
+            $month2 = $monthmodify;
+            
 
                 foreach (['Combustible', 'Peaje', 'Otros', 'CombustibleGep'] as $concepto) {
                     $gastosPorCampoUsuario[$concepto] = Operaciones::where('concepto', $concepto)
                         ->where('usuario_id', $usuariomodify)
+                        ->where('cuadrilla', $zona)
                         ->whereBetween('fecha_insercion', [$fechaInicioMensual, $fechaFinMensual])
-                        ->sum('gasto');
+                        ->sum('monto_total');
                 }
 
             $usuario = $usuariomodify;
         }
 
-        $gastosPorAnual = Operaciones::whereBetween('fecha_insercion', [$fechaInicioAnual, $fechaFinAnual])->sum('gasto');
-        // Realizar la consulta para sumar los gastos del mes actual
+        $gastosPorAnual = Operaciones::whereBetween('fecha_insercion', [$fechaInicioAnual, $fechaFinAnual])->sum('monto_total');
+
         $gastosPorMes = Operaciones::whereBetween('fecha_insercion', [$fechaInicioMensual, $fechaFinMensual])
-                                    ->sum('gasto');
-                                
-        $gastosPorCampo = [];
-        
-        foreach (['Combustible', 'Peaje', 'Otros', 'CombustibleGep'] as $concepto) {
-            $gastosPorCampo[$concepto] = Operaciones::where('concepto', $concepto)
-                ->whereBetween('fecha_insercion', [$fechaInicioMensual, $fechaFinMensual])
-                ->sum('gasto');
-        }
+                                    ->sum('monto_total');
 
-        return view('General.principal',compact('gastosPorAnual', 'gastosPorMes','gastosPorCampo','gastosPorCampoUsuario','countuser','year','month','usuario','users'));
-    }
+        $gastosPorCuadrilla = Operaciones::whereBetween('fecha_insercion', [$fechaInicioMensual, $fechaFinMensual])
+        ->where('cuadrilla', $zona)
+        ->sum('monto_total');
 
-    public function generate(reporteRequest $request){
-        $date = Carbon::now()->format('Y-m-d');
-        $inicio = $request->inicio.' 00:00:00';
-        $fin = $request->fin.' 23:59:59';
-        switch ($request->tabla){
-            case('0'):
-                return Excel::download(new OperacionExport($inicio,$fin), 'General '.$date.'.xlsx');
-            case('1'):
-                return Excel::download(new CombustibleExport($inicio,$fin), 'Combustible '.$date.'.xlsx');
-            case('2'):
-                return Excel::download(new TrasladoExport($inicio,$fin), 'Traslado '.$date.'.xlsx');
-            case('3'):
-                return Excel::download(new PeajeExport($inicio,$fin), 'Peaje '.$date.'.xlsx');
-            case('4'):
-                return Excel::download(new OtrosExport($inicio,$fin), 'Otros '.$date.'.xlsx');
-            case('5'):
-                return Excel::download(new CgepExport($inicio,$fin), 'Cgep '.$date.'.xlsx');
-            case('6'):
-                return Excel::download(new RecargaExport($inicio,$fin), 'Recarga '.$date.'.xlsx');
-            case('7'):
-                return Excel::download(new TareaExport($inicio,$fin), 'Tareas '.$date.'.xlsx');
-            case('8'):
-                return Excel::download(new KitHerramientasExport($inicio,$fin), 'KitHerramientas '.$date.'.xlsx');
-            case('9'):
-                return Excel::download(new EquipHerramientasExport($inicio,$fin), 'EquiposHerramientas '.$date.'.xlsx');
-            case('10'):
-                return Excel::download(new ControlEppExport($inicio,$fin), 'ControlEpp '.$date.'.xlsx');
-            case('11'):
-                return Excel::download(new DocumentosCamionetaExport($inicio,$fin), 'DocumentosCamioneta '.$date.'.xlsx');
-            case('12'):
-                return Excel::download(new EquiposCamionetaExport($inicio,$fin), 'EquiposCamioneta '.$date.'.xlsx');
-            case('13'):
-                return Excel::download(new EstadoCamionetaExport($inicio,$fin), 'EstadoCamioneta '.$date.'.xlsx');
-            default:
-                return redirect('/home');
-        }
-        return redirect('/home');
-    }
-
-    public function generar(){
-        return view('Reportes.generar');
+        return view('General.principal',compact('gastosPorAnual', 'gastosPorMes','gastosPorCuadrilla','zona','gastosPorCampo','gastosPorCampoUsuario','countuser','year','month2','usuario','users','concept'));
     }
 
     public function generarpdf(){
-        $usuarios = usuarios::all();
+        $usuarios = UsuarioCCIP::all();
         // echo "El contenido de \$usuarios es: " . json_encode($usuarios);
         return view('Informes.generarpdf')->with('usuarios', $usuarios);
     }
 
-    public function generatepdf(){
-        // // ... Lógica previa para obtener los datos del formulario ...
-        // $date = Carbon::now()->format('Y-m-d');
-        // $iniciopdf = request('fecha_inicio') . ' 00:00:00';
-        // $finalpdf = request('fecha_fin') . ' 23:59:59';
-        // $usuariospdf = request('usuariospdf');
-
-        // $combustibles = Combustible::where('usuario_id', $usuariospdf)
-        // ->whereBetween('fecha_insercion', [$iniciopdf, $finalpdf])
-        // ->get();
-
-        // // Pasar los datos a la vista pdf.blade.php
-        // $pdf = PDF::loadView('informes.pdf', [
-        //     'usuario' => $usuariospdf,
-        //     'fecha_Inicio' => $iniciopdf,
-        //     'fecha_Fin' => $finalpdf,
-        //     'combustibles' => $combustibles
-        // ]);
-
-        // $pdf->setPaper('letter'); // Ajusta el tamaño del papel del PDF si es necesario.
-
-        // // Descargar el PDF.
-        // return $pdf->download("reporte_{$date}.pdf");
-    
-    }
     public function downloadImageToLocal($url){
         $image = Http::timeout(180)->get($url)->body();
         $path = public_path('imagenes/') . basename($url); // Obtener el nombre del archivo de la URL

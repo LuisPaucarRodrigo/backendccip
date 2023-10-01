@@ -73,6 +73,7 @@
                     <th scope="col">Saldo</th>
                     <th scope="col">Recargar</th>
                     <th scope="col">Editar</th>
+                    <th scope="col">Eliminar</th>
                 </tr>
             </thead>
             <tbody>
@@ -89,6 +90,7 @@
                     <td>S/{{$usuarios->saldo}}</td>
                     <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$usuarios->id}}">Recargar</button></td>
                     <td><a class="btn btn-warning" href="/home/mostrarUsuario/{{$usuarios->id}}">Editar</a></td>
+                    <td><a class="btn btn-danger" href="/home/delete/{{$usuarios->id}}">Eliminar</a></td>
                 </tr>
                 <div class="modal fade select" id="staticBackdrop{{$usuarios->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">

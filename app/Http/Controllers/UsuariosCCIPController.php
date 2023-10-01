@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class UsuariosCCIPController extends Controller
 {   
@@ -31,9 +32,11 @@ class UsuariosCCIPController extends Controller
 
     public function editaradmin($id){
         $useredit = user::find($id);
+        $roles = Role::all();
         //dd($useredit);
-        return view('AdminCcip.editadministradores',compact('useredit'));
+        return view('AdminCcip.editadministradores',compact('useredit','roles'));
     }
+    
     public function useradministradores(){
         $users = user::all();
         return view('AdminCcip.useradministradores',compact('users'));
@@ -64,11 +67,18 @@ class UsuariosCCIPController extends Controller
             ->where('id',"=",$id)->first();
         return view('CCIP.editUser')->with('usuario',$usuario);
     }
+
+    public function delete($id){
+        $usuario = UsuarioCCIP::destroy($id);
+        return redirect('/home');
+    }
+
     public function update(Request $request, $id){
         $usuario = UsuarioCCIP::all()->where('id',"=",$id)->first();
         $usuario->name = $request->name;
         $usuario->lastname = $request->lastname;
         $usuario->username = $request->username;
+        $usuario->dni = $request->dni;
         $usuario->email = $request->email;
         if ($usuario->estado != $request->estado){
             $usuario->estado = $request->estado;
