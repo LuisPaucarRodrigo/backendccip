@@ -39,9 +39,6 @@
             <td>{{ $otros->fecha_insercion }}</td>
             <td>{{ $otros->UsuarioCCIP->name }}</td>
         </tr>
-        @php
-            $x = $x+1;
-        @endphp
     @endforeach
     </tbody>
 </table>

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CCIPRequest;
 use App\Http\Requests\forgotRequest;
 use App\Models\Cgep;
 use App\Models\Combustible;
@@ -24,6 +23,8 @@ class UsuariosCCIPController extends Controller
     public function updateuseradmin(Request $request){
         $updateadmin = user::find($request->input('id'));
         $updateadmin->name = $request->input('name');
+        $updateadmin->lastname = $request->input('lastname');
+        $updateadmin->dni = $request->input('dni');
         $updateadmin->email = $request->input('email');
         $updateadmin->rol = $request->input('rol');
         $updateadmin->save();
@@ -47,57 +48,6 @@ class UsuariosCCIPController extends Controller
         return view('CCIP.usuarios')->with('usuarios',$usuarios);
     }
 
-    public function create(CCIPRequest $request){
-        $usuario = new UsuarioCCIP();
-        $usuario->name = $request->get('name');
-        $usuario->lastname = $request->get('lastname');
-        $usuario->username = $request->get('username');
-        $usuario->dni = $request->get('dni');
-        $usuario->email = $request->get('email');
-        $usuario->monto_total = $request->get('saldo');
-        $usuario->saldo = $request->get('saldo');
-        $usuario->password = ($request->password);
-        $usuario->estado = $request->get('estado');
-        $usuario->remember_token = Str::uuid();
-        $usuario->save();
-        return redirect('/home');
-    }
-    public function modify($id){
-        $usuario = UsuarioCCIP::all('id','name','lastname','dni','username','email','estado')
-            ->where('id',"=",$id)->first();
-        return view('CCIP.editUser')->with('usuario',$usuario);
-    }
-
-    public function delete($id){
-        $usuario = UsuarioCCIP::destroy($id);
-        return redirect('/home');
-    }
-
-    public function update(Request $request, $id){
-        $usuario = UsuarioCCIP::all()->where('id',"=",$id)->first();
-        $usuario->name = $request->name;
-        $usuario->lastname = $request->lastname;
-        $usuario->username = $request->username;
-        $usuario->dni = $request->dni;
-        $usuario->email = $request->email;
-        if ($usuario->estado != $request->estado){
-            $usuario->estado = $request->estado;
-            $usuario->remember_token = Str::uuid();
-        }
-        $usuario->save();
-        return redirect('/home');
-    }
-
-    //password
-    public function edit_password($id){
-        return view('CCIP.forgotPassword')->with('id',$id);
-    }
-    public function update_password(forgotRequest $request, $id){
-        $usuario = UsuarioCCIP::all()->where('id',"=",$id)->first();
-        $usuario->password = ($request->password);
-        $usuario->save();
-        return redirect('/home/mostrarUsuario/'.$id);
-    }
     public function recargar(Request $request){
         $usuarioId = $request->input('usuario_id');        
         $opcion = $request->input('opcion');
@@ -139,38 +89,5 @@ class UsuariosCCIPController extends Controller
         }
 
         
-    }
-    public function liquidar(){
-        $usuario = UsuarioCCIP::all();
-        foreach($usuario as $user){
-            $recarga = Recarga::where('usuario_id', $user->id)
-            ->latest()
-            ->first();
-            //dd($recarga);
-            if($user->saldo < 0){
-                $recarga -> monto += $user->saldo;
-                $user -> egresos = $user -> saldo * (-1);
-                $user -> monto_total = 0;
-                $user -> saldo = $user -> saldo;
-                
-            }elseif($user->saldo > 0){
-                $recarga->monto -= $user->saldo;
-                $user -> egresos = 0;
-                $user -> monto_total = $user -> saldo;
-                $user -> saldo = $user -> saldo;
-                $newrecarga = new Recarga();
-                $newrecarga->opcion = $recarga ->opcion;
-                $newrecarga->cuadrilla = $recarga ->cuadrilla;
-                $newrecarga->monto = $user -> saldo;
-                $newrecarga->numero_operacion = $recarga ->numeroOperacion;
-                $newrecarga->fecha_recarga = $recarga ->dateCuadrilla;
-                $newrecarga->concepto = $recarga ->texto;
-                $newrecarga->usuario_id = $recarga -> usuarioId;
-                $newrecarga -> save();
-            }
-            $user -> save();
-            $recarga->save();
-        };
-        return redirect('/home');
     }
 }

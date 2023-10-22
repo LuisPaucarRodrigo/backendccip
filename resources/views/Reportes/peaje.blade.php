@@ -35,9 +35,6 @@
             <td>{{ $peajes->fecha_insercion }}</td>
             <td>{{ $peajes->UsuarioCCIP->name }}</td>
         </tr>
-        @php
-            $x = $x+1;
-        @endphp
     @endforeach
     </tbody>
 </table>

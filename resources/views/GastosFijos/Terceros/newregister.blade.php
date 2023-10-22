@@ -13,33 +13,38 @@
                 <div class="card">
                     <div class="card-header">Agregar Información</div>
                     <div class="card-body">
-                        <form method="POST" action="/gastosfijos/terceros/saverent">
+                        <form method="POST" action="/gastosfijos/alquileres/create">
                             @csrf
+                            <input type="hidden" id="type_gasto" name="type_gasto" value="Terceros">
                             <div class="form-group">
                                 <label for="zona">Control de Gastos</label>
                                 <select id="control_gastos" class="form-control" name="control_gastos">
-                                    <option value="Cicsa_claro_pint" {{ $controlgastos === 'Cicsa_claro_pint' ? 'selected' : '' }}>Cicsa Claro Pint</option>
-                                    <option value="Cicsa_claro_pxt" {{ $controlgastos === 'Cicsa_claro_pxt' ? 'selected' : '' }}>Cicsa Claro Pxt</option>
-                                    <option value="Cicsa_gtd" {{ $controlgastos === 'Cicsa_gtd' ? 'selected' : '' }}>Cicsa Gtd</option>
+                                    <option value="Cicsa_claro_pint" selected>Cicsa Claro Pint</option>
+                                    <option value="Cicsa_claro_pxt">Cicsa Claro Pxt</option>
+                                    <option value="Cicsa_gtd">Cicsa Gtd</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="zona">Zona</label>
                                 <select id="zonaSelect" class="form-control" name="zona">
-                                    <option value="Arequipa" {{ $zona === 'Arequipa' ? 'selected' : '' }}>Arequipa</option>
-                                    <option value="Mazuko" {{ $zona === 'Mazuko' ? 'selected' : '' }}>Mazuko</option>
-                                    <option value="Chala" {{ $zona === 'Chala' ? 'selected' : '' }}>Chala</option>
-                                    <option value="Moquegua" {{ $zona === 'Moquegua' ? 'selected' : '' }}>Moquegua</option>
-                                    <option value="Puerto" {{ $zona === 'Puerto' ? 'selected' : '' }}>Puerto</option>
+                                    <option value="Arequipa" selected>Arequipa</option>
+                                    <option value="Mazuko">Mazuko</option>
+                                    <option value="Chala">Chala</option>
+                                    <option value="Moquegua">Moquegua</option>
+                                    <option value="Puerto">Puerto</option>
                                 </select>
                             </div>
 
 
 
                             <div class="form-group">
-                                <label for="nombre">Nombre del Cliente:</label>
-                                <input type="text" class="form-control" id="nombre" name="name" required>
+                                <label for="nombre">Nombre del Proveedor:</label>
+                                <select id="nombre" class="form-control" name="name">
+                                @foreach($suppliers as $supplier)
+                                    <option value="{{ $supplier->razon_social }}">{{ $supplier->razon_social }}</option>
+                                @endforeach
+                                </select>
                             </div>
 
                             <div class="form-group">

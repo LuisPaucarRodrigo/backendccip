@@ -25,7 +25,6 @@
         @endif
 
         <div class="justify-content-between">
-            <a type="button" href="/home/nuevoUsuario" class="btn btn-success">+ Agregar</a>
             <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#notificationmodal">+ Notificar</a>
             <button type="button" class="btn btn-warning text-end" onclick="mostrarConfirmacion()">Liquidar</button>
         </div>
@@ -72,8 +71,6 @@
                     <th scope="col">Egresos Acumulados del Mes</th>
                     <th scope="col">Saldo</th>
                     <th scope="col">Recargar</th>
-                    <th scope="col">Editar</th>
-                    <th scope="col">Eliminar</th>
                 </tr>
             </thead>
             <tbody>
@@ -89,8 +86,6 @@
                     <td>S/{{$usuarios->egresos}}</td>
                     <td>S/{{$usuarios->saldo}}</td>
                     <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$usuarios->id}}">Recargar</button></td>
-                    <td><a class="btn btn-warning" href="/home/mostrarUsuario/{{$usuarios->id}}">Editar</a></td>
-                    <td><a class="btn btn-danger" href="/home/delete/{{$usuarios->id}}">Eliminar</a></td>
                 </tr>
                 <div class="modal fade select" id="staticBackdrop{{$usuarios->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -215,7 +210,7 @@
             var confirmacion = window.confirm("¿Estás seguro de que deseas liquidar?");
             
             if (confirmacion) {
-                window.location.href = "/home/liquidarUsuario";
+                window.location.href = "/rrhh/liquidarUsuario";
             } else {
                 // Aquí puedes manejar el caso en el que el usuario cancela la acción.
             }

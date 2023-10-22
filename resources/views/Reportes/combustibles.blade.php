@@ -3,6 +3,7 @@
 @endphp
 <table>
     <thead>
+    <tr></tr>
     <tr>
         <th></th>
         <th>N°</th>

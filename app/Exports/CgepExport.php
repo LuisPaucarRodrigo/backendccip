@@ -6,6 +6,7 @@ use App\Models\Cgep;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class CgepExport implements FromView,WithColumnWidths
 {
@@ -37,6 +38,18 @@ class CgepExport implements FromView,WithColumnWidths
             'L' => 35,
             'M' => 20,
             'N' => 12,
+        ];
+    }
+    public function styles(Worksheet $sheet)
+    {
+        return [
+            // Style the first row as bold text.
+            2    => ['font' => ['bold' => true]],
+            'H' => [
+                'numberFormat' => [
+                    'formatCode' => '0.00', // Formato de dos decimales
+                ],
+            ],
         ];
     }
 }

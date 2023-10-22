@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('site');
             $table->string('titulo');
             $table->text('operaciones');
-            $table->string('descripcion',1000);
+            $table->string('descripcion',1000)->nullable();
             $table->string('observaciones', 1000)->nullable()->default(null);
             $table->string('crqincidencias', 20)->nullable()->default(null);
             $table->date('fechaCreacion');

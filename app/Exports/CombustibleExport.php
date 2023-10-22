@@ -6,8 +6,10 @@ use App\Models\Combustible;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class CombustibleExport implements FromView,WithColumnWidths
+class CombustibleExport implements FromView,WithColumnWidths,WithStyles
 {
     var $fecha_inicio = "";
     var $fecha_fin = "";
@@ -36,6 +38,18 @@ class CombustibleExport implements FromView,WithColumnWidths
             'K' => 50,
             'L' => 20,
             'M' => 15,
+        ];
+    }
+    public function styles(Worksheet $sheet)
+    {
+        return [
+            // Style the first row as bold text.
+            2    => ['font' => ['bold' => true]],
+            'H' => [
+                'numberFormat' => [
+                    'formatCode' => '0.00', // Formato de dos decimales
+                ],
+            ],
         ];
     }
 }

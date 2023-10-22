@@ -46,6 +46,11 @@ class PeajeExport implements FromView,WithColumnWidths,WithStyles
         return [
             // Style the first row as bold text.
             2    => ['font' => ['bold' => true]],
+            'J' => [
+                'numberFormat' => [
+                    'formatCode' => '0.00', // Formato de dos decimales
+                ],
+            ],
         ];
     }
 }

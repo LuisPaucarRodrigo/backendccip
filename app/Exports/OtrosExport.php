@@ -48,6 +48,11 @@ class OtrosExport implements FromView,WithColumnWidths,WithStyles
         return [
             // Style the first row as bold text.
             2    => ['font' => ['bold' => true]],
+            'L' => [
+                'numberFormat' => [
+                    'formatCode' => '0.00', // Formato de dos decimales
+                ],
+            ],
         ];
     }
 }

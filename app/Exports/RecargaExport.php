@@ -6,8 +6,10 @@ use App\Models\Recarga;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\WithStyles;
 
-class RecargaExport implements FromView,WithColumnWidths
+class RecargaExport implements FromView,WithColumnWidths,WithStyles
 {
     var $fecha_inicio = "";
     var $fecha_fin = "";
@@ -32,6 +34,18 @@ class RecargaExport implements FromView,WithColumnWidths
             'G' => 18,
             'H' => 35,
             'I' => 15,
+        ];
+    }
+    public function styles(Worksheet $sheet)
+    {
+        return [
+            // Style the first row as bold text.
+            2    => ['font' => ['bold' => true]],
+            'E' => [
+                'numberFormat' => [
+                    'formatCode' => '0.00', // Formato de dos decimales
+                ],
+            ],
         ];
     }
 }

@@ -60,7 +60,7 @@
                         @if($task->state == $estado)
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between align-items-center">
-                                {{ $task->titulo }}
+                                {{ $task->site }}
                                 <div class="form-check">
                                     <a class="btn btn-primary mx-1" href="/home/tareas/user/redirectupdate/{{ $task->id }}">Modificar</a>
                                     <a class="btn btn-danger mx-1" href="/home/tareas/user/delete/{{ $task->id }}">Eliminar</a>
@@ -204,11 +204,11 @@
                     </div>
                     <div class="form-group">
                         <label for="fechaCreacion">Fecha de Creación:</label>
-                        <input type="date" class="form-control" id="fechaCreacion" name="fechaCreacion" min="<?= date('Y-m-d'); ?>" required>
+                        <input type="date" class="form-control" id="fechaCreacion" name="fechaCreacion" required>
                     </div>
                     <div class="form-group">
                         <label for="fechaVencimiento">Fecha de Vencimiento:</label>
-                        <input type="date" class="form-control" id="fechaVencimiento" name="fechaVencimiento" min="<?= date('Y-m-d'); ?>" required>
+                        <input type="date" class="form-control" id="fechaVencimiento" name="fechaVencimiento" required>
                     </div>
                     <div class="form-group">
                         <label for="descripcion">Descripción de la Tarea:</label>

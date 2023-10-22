@@ -110,13 +110,14 @@
           <input type="hidden" name="updateType" value="usuario">
             <div class="d-flex justify-content-between align-items-center">
               <h3 class="card-title">Gastos Usuario</h3>
-              <div class="input-group" style="max-width: 128px;">
+              <div class="input-group" style="max-width: 280px;">
+              <input id="gastototalusers" class="form-control" type="text" disabled value="S/{{ $gastototalusers }}">
                 <select id="UserSelect" class="form-control" name="usuario">
                   @foreach($users as $user)
                   <option value="{{ $user->id }}" {{ $user->id == $usuario ? 'selected' : ($loop->first ? 'selected' : '') }}>{{ $user->name }}</option>
                   @endforeach
                 </select>
-              </div>  
+              </div>
             </div>
             <canvas id="gastosChartUsuario"></canvas>
         </div>
@@ -128,7 +129,6 @@
 
 @section('css')
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-
 @stop
 
 @section('js')
@@ -279,13 +279,15 @@
                 if (gastosChartusers) {
                   gastosChartusers.destroy();
                 }
+                $('#gastototalusers').val('S/' + datausers.gastototalusers);
+                
                 gastosChartusers = new Chart(ctxusersjs, {
                     type: 'bar',
                     data: {
                       labels: ['Combustible', 'Peaje', 'Otros', 'Combustible GEP'],
                         datasets: [{
                             label: 'Gastos Usuario',
-                            data: Object.values(datausers),
+                            data: Object.values(datausers.gastosPorCampoUsuariojs),
                             backgroundColor: ['#007bff', '#28a745', '#ffc107', '#dc3545'],
                             borderWidth: 1
                         }]

@@ -16,6 +16,14 @@
                 <input type="text" class="form-control" id="nombre" name="name" value="{{$useredit->name}}">
             </div>
             <div class="mb-3">
+                <label for="lastname" class="form-label">Apellido</label>
+                <input type="text" class="form-control" id="lastname" name="lastname" value="{{$useredit->lastname}}">
+            </div>
+            <div class="mb-3">
+                <label for="dni" class="form-label">DNI</label>
+                <input type="dni" class="form-control" id="dni" name="dni" value="{{$useredit->dni}}">
+            </div>
+            <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" name="email" value="{{$useredit->email}}">
             </div>

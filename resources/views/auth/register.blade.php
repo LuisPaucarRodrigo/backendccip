@@ -21,6 +21,16 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="lastname" class="form-label">Apellido</label>
+                            <input type="text" name="lastname" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="dni" class="form-label">DNI</label>
+                            <input type="text" name="dni" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" name="email" class="form-control" required>
                         </div>

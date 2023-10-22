@@ -21,9 +21,11 @@ class RegisterController extends Controller
             // No hay usuario autenticado, procede con el registro y autentica al nuevo usuario
             $user = new User;
             $user->name = $request->name;
+            $user->lastname = $request->lastname;
+            $user->dni = $request->dni;
             $user->email = $request->email;
             $user->rol = $request->role;
-            $user->password = bcrypt($request->password);
+            $user->password = $request->password;
             $user->save();
 
             // Asignar el rol correspondiente al usuario

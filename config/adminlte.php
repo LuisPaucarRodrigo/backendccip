@@ -320,20 +320,26 @@ return [
             'submenu' => [
                 [
                     'text'        => 'Camionetas',
-                    'url'         => '/gastosfijos/camioneta',
-                    'can' => 'admin.camioneta',
+                    'url'         => '/gastosfijos/alquileres/Camionetas',
+                    'can' => 'admin.gastosfijos',
                     'icon' =>'fas fa-truck',
                     'label_color' => 'success',
                 ],[
                     'text'        => 'Habitaciones',
-                    'url'         => '/gastosfijos/habitaciones',
-                    'can' => 'admin.habitaciones',
+                    'url'         => '/gastosfijos/alquileres/Habitaciones',
+                    'can' => 'admin.gastosfijos',
                     'icon' =>'fas fa-bed',
                     'label_color' => 'success',
                 ],[
                     'text'        => 'Terceros',
-                    'url'         => '/gastosfijos/terceros',
-                    'can' => 'admin.terceros',
+                    'url'         => '/gastosfijos/alquileres/Terceros',
+                    'can' => 'admin.gastosfijos',
+                    'icon' =>'fas fa-users',
+                    'label_color' => 'success',
+                ],[
+                    'text'        => 'Proveedores',
+                    'url'         => '/gastosfijos/proveedores',
+                    'can' => 'admin.gastosfijos',
                     'icon' =>'fas fa-users',
                     'label_color' => 'success',
                 ]
@@ -412,7 +418,7 @@ return [
             'can' => 'admin.operaciones',
             'submenu' => [
                 [
-                    'text'        => 'Control de Gastos',
+                    'text'        => 'Control Operativo',
                     'url'         => 'home/plantainterna',
                     'icon' =>'fas fa-fw fa-chart-bar',
                     'label_color' => 'success',

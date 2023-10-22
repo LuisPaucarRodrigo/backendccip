@@ -27,6 +27,7 @@ return new class extends Migration
             $table->double('monto_total');
             $table->string('foto_otros');
             $table->foreignId('usuario_id')->references('id')->on('usuario_c_c_i_p_s');
+            $table->unique(['ruc', 'numero_documento']);
             $table->timestamps();
         });
     }

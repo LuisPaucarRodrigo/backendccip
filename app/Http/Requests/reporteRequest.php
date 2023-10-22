@@ -25,15 +25,18 @@ class reporteRequest extends FormRequest
     public function rules()
     {
         return [
-            'inicio'=>'required',
-            'fin'=>'required|after_or_equal:inicio',
+            'accion' => 'required|in:generar,previsualizacion',
+            'inicio' => 'required_if:accion,generar',
+            'fin' => 'required_if:accion,generar|after_or_equal:inicio',
         ];
     }
-    public function messages(){
-        return[
-            'inicio.required'=>'*Es nesesario ingresar una fecha',
-            'fin.required'=>'*Es nesesario ingresar una fecha',
-            'fin.after_or_equal'=>'*La fecha debe ser una fecha posterior o igual a inicio',
+    public function messages()
+    {
+        return [
+            'accion.required' => 'Por favor, seleccione una acción.',
+            'inicio.required_if' => 'Por favor, ingrese la fecha de inicio.',
+            'fin.required_if' => 'Por favor, ingrese la fecha de fin.',
+            'fin.after_or_equal' => 'La fecha de fin debe ser posterior o igual a la fecha de inicio.',
         ];
     }
 }

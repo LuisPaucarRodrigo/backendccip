@@ -21,6 +21,8 @@
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
+                <th>Apellido</th>
+                <th>DNI</th>
                 <th>Email</th>
                 <th>Rol</th>
                 <th>Acciones</th>
@@ -31,6 +33,8 @@
             <tr>
                 <td>{{ $user->id }}</td>
                 <td>{{ $user->name }}</td>
+                <td>{{ $user->lastname }}</td>
+                <td>{{ $user->dni }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->rol }}</td>
                 <td>

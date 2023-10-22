@@ -33,7 +33,7 @@ Route::middleware(['admin', 'can:admin.general'])->group(function () {
     Route::post('/home/general/config', [\App\Http\Controllers\HomeController::class, 'general']);
     Route::post('/home/general/actualizar', [\App\Http\Controllers\HomeController::class, 'actualizar']);
     Route::post('/home/general/actualizar/users', [\App\Http\Controllers\HomeController::class, 'actualizargraficusers']);
-    
+
     Route::get('/home/general/config', function () {
         return redirect()->route('/home/general');
     });
@@ -74,17 +74,6 @@ Route::middleware(['can:admin.usuarios'])->group(function () {
     //usersadmin
     Route::get('/home/editaradmin/{id}', [\App\Http\Controllers\UsuariosCCIPController::class, 'editaradmin']);
     Route::post('/home/updateuseradmin', [\App\Http\Controllers\UsuariosCCIPController::class, 'updateuseradmin']);
-    //UsuariosCCIPController
-    Route::get('/home/nuevoUsuario', function () {
-        return view('CCIP.newUser');
-    });
-    Route::post('/home/createuser', [\App\Http\Controllers\UsuariosCCIPController::class, 'create']);
-    Route::get('/home/liquidarUsuario', [\App\Http\Controllers\UsuariosCCIPController::class, 'liquidar']);
-    Route::get('/home/mostrarUsuario/{id}', [\App\Http\Controllers\UsuariosCCIPController::class, 'modify']);
-    Route::get('/home/delete/{id}', [\App\Http\Controllers\UsuariosCCIPController::class, 'delete']);
-    Route::post('/home/update/{id}', [\App\Http\Controllers\UsuariosCCIPController::class, 'update']);
-    Route::get('/home/edit/password/{id}', [\App\Http\Controllers\UsuariosCCIPController::class, 'edit_password']);
-    Route::post('/home/update/password/{id}', [\App\Http\Controllers\UsuariosCCIPController::class, 'update_password']);
     //Recargas
     Route::post('/home/recargar/users', [\App\Http\Controllers\UsuariosCCIPController::class, 'recargar']);
     //Notificaciones
@@ -93,8 +82,7 @@ Route::middleware(['can:admin.usuarios'])->group(function () {
 
 Route::middleware(['can:admin.reportes'])->group(function () {
     //Reportes
-    Route::get('/home/reportes', [\App\Http\Controllers\ReportesController::class, 'generar']);
-    Route::post('home/generate', [\App\Http\Controllers\ReportesController::class, 'generate']);
+    Route::get('/home/reportes', [\App\Http\Controllers\ReportesController::class, 'generate']);
     Route::post('/home/reportes', [\App\Http\Controllers\ReportesController::class, 'generate']);
 });
 
@@ -104,20 +92,38 @@ Route::middleware(['can:admin.operaciones'])->group(function () {
     Route::post('/home/plantainterna', [\App\Http\Controllers\PLantaInternaController::class, 'controlgastos']);
 });
 
-Route::middleware(['can:admin.rrhh'])->group(function () {   
+Route::middleware(['can:admin.rrhh'])->group(function () {
     Route::get('/rrhh/personal', [\App\Http\Controllers\RRHHController::class, 'personalindex']);
-    Route::post('/rrhh/personal/newregister', [\App\Http\Controllers\RRHHController::class, 'personalindexnewregister']);
     Route::get('/rrhh/planilla', [\App\Http\Controllers\RRHHController::class, 'planillaindex']);
+    Route::get('/obtener_usuarios', [\App\Http\Controllers\RRHHController::class, 'obtener_usuarios']);
+    Route::get('/rrhh/informacionpersonal/new', [\App\Http\Controllers\RRHHController::class, 'agregarinfo']);
+    Route::get('/rrhh/aporteregimen', [\App\Http\Controllers\RRHHController::class, 'modifyafp']);
+    Route::post('/rrhh/aporteregimen/edit/{id}', [\App\Http\Controllers\RRHHController::class, 'modifyafpedit']);
+    Route::get('/rrhh/informacionpersonal/adicional', [\App\Http\Controllers\RRHHController::class, 'agregarinfoadicional']);
+    Route::post('/rrhh/informacionadicional', [\App\Http\Controllers\RRHHController::class, 'agregarinfoadicionalbd']);
+    Route::post('/rrhh/personal/informacionpersonal', [\App\Http\Controllers\RRHHController::class, 'informacionpersonaladicional']);
+    Route::get('/rrhh/nuevoUsuario', function () {
+        return view('RRHH.newUser');
+    });
+    Route::post('/rrhh/createuser', [\App\Http\Controllers\RRHHController::class, 'create']);
+    Route::get('/rrhh/mostrarUsuario/{id}', [\App\Http\Controllers\RRHHController::class, 'modify']);
+    Route::get('/rrhh/delete/{id}', [\App\Http\Controllers\RRHHController::class, 'delete']);
+    Route::post('/rrhh/update/{id}', [\App\Http\Controllers\RRHHController::class, 'update']);
+    Route::get('/rrhh/edit/password/{id}', [\App\Http\Controllers\RRHHController::class, 'edit_password']);
+    Route::post('/rrhh/update/password/{id}', [\App\Http\Controllers\RRHHController::class, 'update_password']);
+    Route::get('/rrhh/liquidarUsuario', [\App\Http\Controllers\RRHHController::class, 'liquidar']);
 });
 
 Route::middleware(['can:admin.gastosfijos'])->group(function () {
-    Route::get('/gastosfijos/camioneta', [\App\Http\Controllers\GastosFijosController::class, 'camionetaindex']);
-    Route::get('/gastosfijos/camioneta/newrent', [\App\Http\Controllers\GastosFijosController::class, 'camionetaindexnewrent']);
-    Route::post('/gastosfijos/camioneta/saverent', [\App\Http\Controllers\GastosFijosController::class, 'camionetaindexsaverent']);
-    Route::get('/gastosfijos/habitaciones', [\App\Http\Controllers\GastosFijosController::class, 'habitacionesindex']);
-    Route::get('/gastosfijos/habitaciones/newrent', [\App\Http\Controllers\GastosFijosController::class, 'habitacionesindexnewrent']);
-    Route::post('/gastosfijos/habitaciones/saverent', [\App\Http\Controllers\GastosFijosController::class, 'habitacionesindexsaverent']);
-    Route::get('/gastosfijos/terceros', [\App\Http\Controllers\GastosFijosController::class, 'tercerosindex']);
-    Route::get('/gastosfijos/terceros/newrent', [\App\Http\Controllers\GastosFijosController::class, 'tercerosindexnewrent']);
-    Route::post('/gastosfijos/terceros/saverent', [\App\Http\Controllers\GastosFijosController::class, 'tercerosindexsaverent']);
+    Route::get('/gastosfijos/alquileres/{type}', [\App\Http\Controllers\GastosFijosController::class, 'gastosfijosindex']);
+    Route::get('/gastosfijos/alquileres/newregistro/{type}', [\App\Http\Controllers\GastosFijosController::class, 'gastosfijosnewregistro']);
+    Route::post('/gastosfijos/alquileres/create', [\App\Http\Controllers\GastosFijosController::class, 'gastosfijoscreate']);
+    Route::post('/gastosfijos/alquileres/pago', [\App\Http\Controllers\GastosFijosController::class, 'gastosfijospago']);
+
+    Route::get('/gastosfijos/proveedores', 'App\Http\Controllers\GastosFijosController@proveedoresindex');
+    Route::get('/gastosfijos/proveedores/newrent', 'App\Http\Controllers\GastosFijosController@proveedoresindexnewrent')->name('proveedores.create');
+    Route::post('/gastosfijos/proveedores/saverent', 'App\Http\Controllers\GastosFijosController@proveedoresindexsaverent')->name('proveedores.newcreate');
+    Route::get('/gastosfijos/proveedores/editar/{id}', 'App\Http\Controllers\GastosFijosController@proveedoreseditar')->name('proveedores.edit');
+    Route::put('/gastosfijos/proveedores/update', 'App\Http\Controllers\GastosFijosController@proveedoresupdate')->name('proveedores.update');
+    Route::delete('/gastosfijos/proveedores/delete/{id}', 'App\Http\Controllers\GastosFijosController@proveedoresdestroy')->name('proveedores.delete');
 });

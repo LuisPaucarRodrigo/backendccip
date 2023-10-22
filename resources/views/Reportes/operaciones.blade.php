@@ -30,16 +30,16 @@ $x = 1;
             <td>{{ $operaciones->tipo_documento }}</td>
             <td>{{ $operaciones->nro_documento }}</td>
             <td>{{ $operaciones->fecha_documento }}</td>
-            <td>{{ number_format(abs($operaciones->gasto) / 1.18, 2) }}</td>
-            <td>{{ number_format(abs($operaciones->gasto) - (abs($operaciones->gasto) / 1.18), 2) }}</td>
-            <td>{{ number_format(abs($operaciones->monto_total), 2) }}</td>
-            <td>{{ $operaciones->fecha_insercion }}</td>
+            @php
+            $igv = ($operaciones->cuadrilla === 'MDD1' || $operaciones->cuadrilla === 'MDD2') ? 1 : 1.18;
+            @endphp
+            <td>{{ number_format(abs($operaciones->monto_total) / $igv, 2) }}</td>
+            <td>{{ number_format(abs($operaciones->monto_total) - (abs($operaciones->monto_total) / $igv), 2) }}</td>
+            <td>{{ $operaciones->monto_total }}</td>
+            <td>{{ date('Y-m-d', strtotime($operaciones->fecha_insercion)) }}</td>
             <td>{{ $operaciones->UsuarioCCIP->name }}</td>
             <td>{{ $operaciones->concepto }}</td>
         </tr>
-        @php
-        $x = $x+1;
-        @endphp
         @endforeach
     </tbody>
 </table>

@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Psy\Readline\Hoa\Console;
+use Illuminate\Support\Facades\DB;
+
 
 class ApiController extends Controller
 {
@@ -110,17 +112,8 @@ class ApiController extends Controller
     public function combustible(Request $request){
         $v = $this->validar($request->usuario_id,$request->token);
         if ($v){
-            $existingCombustible = Combustible::where('nro_factura', $request->nro_factura)
-            ->where('ruc', $request->ruc)
-            ->first();
-
-            if ($existingCombustible) {
-                // Registro duplicado, retornar respuesta indicando que no se pudo agregar
-                return response()->json([
-                    'response' => 2,
-                    'message' => 'Registro ya Existente.'
-                ]);
-            }else {
+            try {
+                DB::beginTransaction();
                 $date = Carbon::now()->format('Y-m-d');
                 $combustible = new Combustible();
                 $combustible->ruc = $request->ruc;
@@ -153,9 +146,19 @@ class ApiController extends Controller
                 $this->operacion($request->usuario_id,$request->ruc,"Factura",$request->control_gastos,$request->cuadrilla,$request->nro_factura,
                 $request->fecha_documento,"Combustible",$request->monto_total,$request->fecha_insercion);
                 $this->gasto($request->usuario_id,$request->monto_total);
+                DB::commit();
                 return response()->json([
                     'response'=>1
                 ]);
+            } catch (\PDOException $e) {
+                if ($e->getCode() == 23000) {
+                    return response()->json([
+                        'response' => 2,
+                        'message' => 'Registro ya Existente.'
+                    ]);
+                }else{
+                    DB::rollBack();
+                } 
             }
         }
         return response()->json([
@@ -166,17 +169,8 @@ class ApiController extends Controller
     public function peaje(Request $request){
         $v = $this->validar($request->usuario_id,$request->token);
         if ($v) {
-            $existingPeaje = Peaje::where('nro_factura', $request->nro_factura)
-            ->where('ruc', $request->ruc)
-            ->first();
-
-            if ($existingPeaje) {
-                // Registro duplicado, retornar respuesta indicando que no se pudo agregar
-                return response()->json([
-                    'response' => 2,
-                    'message' => 'Registro ya Existente.'
-                ]);
-            } else {
+            try {
+                DB::beginTransaction();
                 $date = Carbon::now()->format('Y-m-d');
                 $peaje = new Peaje();
                 $peaje->ruc = $request->ruc;
@@ -200,9 +194,19 @@ class ApiController extends Controller
                 $this->operacion($request->usuario_id,$request->ruc, "Factura",$request->control_gastos, $request->cuadrilla, $request->nro_factura,
                 $request->fecha_documento,"Peaje", $request->monto_total, $request->fecha_insercion);
                 $this->gasto($request->usuario_id, $request->monto_total);
+                DB::commit();
                 return response()->json([
-                    'response' => 1
+                    'response'=>1
                 ]);
+            } catch (\PDOException $e) {
+                if ($e->getCode() == 23000) {
+                    return response()->json([
+                        'response' => 2,
+                        'message' => 'Registro ya Existente.'
+                    ]);
+                }else{
+                    DB::rollBack();
+                } 
             }
         }
         return response()->json([
@@ -213,15 +217,8 @@ class ApiController extends Controller
     public function otros(Request $request){
         $v = $this->validar($request->usuario_id,$request->token);
         if ($v) {
-            $existingOtros = Otros::where('numero_documento', $request->numero_documento)
-            ->where('ruc', $request->ruc)
-            ->first();
-            if ($existingOtros){
-                return response()->json([
-                    'response' => 2,
-                    'message' => 'Registro ya Existente.'
-                ]);
-            }else{
+            try {
+                DB::beginTransaction();
                 $date = Carbon::now()->format('Y-m-d');
                 $otros = new Otros();
                 $otros->ruc = $request-> ruc;
@@ -247,9 +244,19 @@ class ApiController extends Controller
                 $this->operacion($request->usuario_id,$request->ruc,$request->tipo_documento,$request->control_gastos, $request->cuadrilla, $request->numero_documento,
                 $request->fecha_documento,"Otros", $request->monto_total, $request->fecha_insercion);
                 $this->gasto($request->usuario_id, $request->monto_total);
+                DB::commit();
                 return response()->json([
-                    'response' => 1
+                    'response'=>1
                 ]);
+            } catch (\PDOException $e) {
+                if ($e->getCode() == 23000) {
+                    return response()->json([
+                        'response' => 2,
+                        'message' => 'Registro ya Existente.'
+                    ]);
+                }else{
+                    DB::rollBack();
+                } 
             }
         }
         return response()->json([
@@ -260,17 +267,9 @@ class ApiController extends Controller
     public function cgep(Request $request){
         $v = $this->validar($request->usuario_id,$request->token);
         if ($v){
-            $existingCgep = Cgep::where('nro_factura', $request->nro_factura)
-            ->where('ruc', $request->ruc)
-            ->first();
 
-            if ($existingCgep) {
-                // Registro duplicado, retornar respuesta indicando que no se pudo agregar
-                return response()->json([
-                    'response' => 2,
-                    'message' => 'Registro ya Existente.'
-                ]);
-            } else {
+            try {
+                DB::beginTransaction();
                 $date = Carbon::now()->format('Y-m-d');
                 $cgep = new Cgep();
                 $cgep->ruc = $request->ruc;
@@ -304,9 +303,19 @@ class ApiController extends Controller
                 $this->operacion($request->usuario_id,$request->ruc,"Factura",$request->control_gastos,$request->cuadrilla,$request->nro_factura,
                 $request->fecha_documento,"CombustibleGep",$request->monto_total,$request->fecha_insercion);
                 $this->gasto($request->usuario_id,$request->monto_total);
+                DB::commit();
                 return response()->json([
                     'response'=>1
                 ]);
+            } catch (\PDOException $e) {
+                if ($e->getCode() == 23000) {
+                    return response()->json([
+                        'response' => 2,
+                        'message' => 'Registro ya Existente.'
+                    ]);
+                }else{
+                    DB::rollBack();
+                } 
             }
         }
         return response()->json([
