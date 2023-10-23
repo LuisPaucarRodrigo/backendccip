@@ -77,7 +77,8 @@ Route::middleware(['can:admin.usuarios'])->group(function () {
     //Recargas
     Route::post('/home/recargar/users', [\App\Http\Controllers\UsuariosCCIPController::class, 'recargar']);
     //Notificaciones
-    Route::post('/home/notification', [\App\Http\Controllers\HomeController::class, 'notification']);
+    Route::post('/home/notification', [\App\Http\Controllers\UsuariosCCIPController::class, 'notification']);
+    Route::get('/rrhh/liquidarUsuario', [\App\Http\Controllers\UsuariosCCIPController::class, 'liquidar']);
 });
 
 Route::middleware(['can:admin.reportes'])->group(function () {
@@ -95,6 +96,8 @@ Route::middleware(['can:admin.operaciones'])->group(function () {
 Route::middleware(['can:admin.rrhh'])->group(function () {
     Route::get('/rrhh/personal', [\App\Http\Controllers\RRHHController::class, 'personalindex']);
     Route::get('/rrhh/planilla', [\App\Http\Controllers\RRHHController::class, 'planillaindex']);
+    Route::get('/rrhh/planilla/export', [\App\Http\Controllers\RRHHController::class, 'planillaexport']);
+    
     Route::get('/obtener_usuarios', [\App\Http\Controllers\RRHHController::class, 'obtener_usuarios']);
     Route::get('/rrhh/informacionpersonal/new', [\App\Http\Controllers\RRHHController::class, 'agregarinfo']);
     Route::get('/rrhh/aporteregimen', [\App\Http\Controllers\RRHHController::class, 'modifyafp']);
@@ -111,7 +114,6 @@ Route::middleware(['can:admin.rrhh'])->group(function () {
     Route::post('/rrhh/update/{id}', [\App\Http\Controllers\RRHHController::class, 'update']);
     Route::get('/rrhh/edit/password/{id}', [\App\Http\Controllers\RRHHController::class, 'edit_password']);
     Route::post('/rrhh/update/password/{id}', [\App\Http\Controllers\RRHHController::class, 'update_password']);
-    Route::get('/rrhh/liquidarUsuario', [\App\Http\Controllers\RRHHController::class, 'liquidar']);
 });
 
 Route::middleware(['can:admin.gastosfijos'])->group(function () {

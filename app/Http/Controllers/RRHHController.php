@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PlanillaExport;
 use App\Models\Datosemergencia;
 use App\Models\Datosfamilia;
 use App\Models\Domicilio;
@@ -19,9 +20,15 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\forgotRequest;
 use App\Models\Typepension;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RRHHController extends Controller
-{
+{   
+
+    public function planillaexport(){
+        return Excel::download(new PlanillaExport(), 'Planilla.xlsx');
+    }
+
     public function modifyafp()
     {
         $afps = Typepension::all();
@@ -214,37 +221,5 @@ class RRHHController extends Controller
         return redirect('/rrhh/mostrarUsuario/' . $id);
     }
 
-    public function liquidar()
-    {
-        $usuario = UsuarioCCIP::all();
-        foreach ($usuario as $user) {
-            $recarga = Recarga::where('usuario_id', $user->id)
-                ->latest()
-                ->first();
-            //dd($recarga);
-            if ($user->saldo < 0) {
-                $recarga->monto += $user->saldo;
-                $user->egresos = $user->saldo * (-1);
-                $user->monto_total = 0;
-                $user->saldo = $user->saldo;
-            } elseif ($user->saldo > 0) {
-                $recarga->monto -= $user->saldo;
-                $user->egresos = 0;
-                $user->monto_total = $user->saldo;
-                $user->saldo = $user->saldo;
-                $newrecarga = new Recarga();
-                $newrecarga->opcion = $recarga->opcion;
-                $newrecarga->cuadrilla = $recarga->cuadrilla;
-                $newrecarga->monto = $user->saldo;
-                $newrecarga->numero_operacion = $recarga->monto;
-                $newrecarga->fecha_recarga = $recarga->fecha_recarga;
-                $newrecarga->concepto = $recarga->concepto;
-                $newrecarga->usuario_id = $recarga->usuario_id;
-                $newrecarga->save();
-            }
-            $user->save();
-            $recarga->save();
-        };
-        return redirect('/rrhh/personal');
-    }
+    
 }

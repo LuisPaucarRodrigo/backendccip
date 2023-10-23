@@ -15,16 +15,6 @@ use Psy\Readline\Hoa\Console;
 
 class HomeController extends Controller
 {
-
-    public function notification(Request $request)
-    {
-        $notify = new Notification();
-        $notify->Titulo = $request->input('notificationTitle');
-        $notify->Mensaje = $request->input('notificationText');
-        $notify->save();
-        return redirect('/home');
-    }
-
     public function actualizargraficusers(Request $request)
     {
         $fechaActual = Carbon::now();

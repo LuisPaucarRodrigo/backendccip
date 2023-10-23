@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsuarioCCIPExport;
 use App\Http\Requests\forgotRequest;
 use App\Models\Cgep;
 use App\Models\Combustible;
+use App\Models\Notification;
 use App\Models\Operaciones;
 use App\Models\Peaje;
 use App\Models\Recarga;
 use App\Models\User;
 use App\Models\UsuarioCCIP;
-use App\Models\UsuarioCCIP as usuarios;
 use Brick\Math\Exception\NegativeNumberException;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Role;
 
 class UsuariosCCIPController extends Controller
@@ -44,7 +46,7 @@ class UsuariosCCIPController extends Controller
     }
 
     public function index(){
-        $usuarios = usuarios::all();
+        $usuarios = UsuarioCCIP::all();
         return view('CCIP.usuarios')->with('usuarios',$usuarios);
     }
 
@@ -87,7 +89,19 @@ class UsuariosCCIPController extends Controller
         }elseif($opcion == 'otros'){
 
         }
+    }
 
-        
+    public function liquidar()
+    {
+        return Excel::download(new UsuarioCCIPExport(), 'SaldoNegativo.xlsx');
+    }
+
+    public function notification(Request $request)
+    {
+        $notify = new Notification();
+        $notify->Titulo = $request->input('notificationTitle');
+        $notify->Mensaje = $request->input('notificationText');
+        $notify->save();
+        return redirect('/home');
     }
 }

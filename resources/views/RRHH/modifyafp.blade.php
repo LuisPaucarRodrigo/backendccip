@@ -9,14 +9,14 @@
 
 @section('content')
 <div class="container">
-    <h1>Modificar AFPs</h1>
+    
     <table class="table">
         <thead>
             <tr>
                 <th>Nombre</th>
                 <th>Valor CSF</th>
-                <th>Valor PRI-SEG</th>
-                <th>Valor APOR-OBLI</th>
+                <!-- <th>Valor PRI-SEG</th>
+                <th>Valor APOR-OBLI</th> -->
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -25,8 +25,8 @@
             <tr>
                 <td contenteditable="true" class="edit-field" data-field="type">{{ $afp->type }}</td>
                 <td contenteditable="true" class="edit-field" data-field="val_csf">{{ $afp->val_csf }}</td>
-                <td contenteditable="true" class="edit-field" data-field="val_pri_seg" disabled>{{ $afp->val_pri_seg }}</td>
-                <td contenteditable="true" class="edit-field" data-field="val_apor_obli">{{ $afp->val_apor_obli }}</td>
+                <!-- <td contenteditable="true" class="edit-field" data-field="val_pri_seg" disabled>{{ $afp->val_pri_seg }}</td>
+                <td contenteditable="true" class="edit-field" data-field="val_apor_obli">{{ $afp->val_apor_obli }}</td> -->
                 <td>
                     <button class="btn btn-primary update-btn" data-id="{{ $afp->id }}">Guardar</button>
                 </td>

@@ -83,9 +83,13 @@
             <select name="regimen_pensionario" id="regimen_pensionario" class="form-control" required>
                 <option value="ONP">ONP</option>
                 <option value="INTEGRA">INTEGRA</option>
-                <option value="HABITAD">HABITAD</option>
+                <option value="HABITAT">HABITAT</option>
                 <option value="PROFUTURO">PROFUTURO</option>
                 <option value="PRIMA">PRIMA</option>
+                <option value="INTEGRAMX">INTEGRAMX</option>
+                <option value="HABITATMX">HABITATMX</option>
+                <option value="PROFUTUROMX">PROFUTUROMX</option>
+                <option value="PRIMAMX">PRIMAMX</option>
             </select>
         </div>
         <div class="form-group">

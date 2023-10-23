@@ -1,24 +1,10 @@
-@extends('adminlte::page')
-
-@section('title', 'CCIP')
-
-@section('content_header')
-<h1>Planilla</h1>
-@stop
-
-@section('content')
 @php
 $x = 1;
 @endphp
-<div class="container">
-    <div class="d-flex justify-content-end">
-        <a type="button" href="/rrhh/planilla/export" class="btn btn-success">Exportar Planilla</a>
-    </div>
-    <br>
-    <div class="table-responsive">
-        <table class="table table-bordered">
+<table>     <tr></tr>
             <thead>
                 <tr>
+                    <th></th>
                     <th>Nº</th>
                     <th>DNI</th>
                     <th>Nombres</th>
@@ -46,6 +32,7 @@ $x = 1;
             <tbody>
                 @foreach($usuarios as $usuarios)
                 <tr class="tr">
+                    <td></td>
                     <td>{{ $x++ }}</td>
                     <td>{{$usuarios->UsuarioCCIP->dni}}</td>
                     <td>{{$usuarios->UsuarioCCIP->name}} {{$usuarios->UsuarioCCIP->lastname}}</td>
@@ -118,14 +105,3 @@ $x = 1;
                 @endforeach
             </tbody>
         </table>
-    </div>
-</div>
-@stop
-
-@section('css')
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-@stop
-
-@section('js')
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-@stop
